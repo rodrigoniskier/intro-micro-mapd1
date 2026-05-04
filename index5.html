@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caso Interativo: Microbiologia Clínica na UBS - Caso 5</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+        .fade-in {
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-blue-800 text-white shadow-md">
+        <div class="max-w-4xl mx-auto px-4 py-6 flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+            </svg>
+            <div>
+                <h1 class="text-2xl font-bold">Microbiologia Clínica Aplicada</h1>
+                <p class="text-sm text-blue-200">Treinamento de Raciocínio Clínico - Caso 5: Dispositivos Invasivos e Biofilme</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow w-full max-w-4xl mx-auto px-4 py-8">
+        
+        <!-- App Container -->
+        <div id="app-container" class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+            
+            <!-- Progress/Status Bar -->
+            <div id="status-bar" class="bg-gray-50 px-6 py-3 border-b border-gray-100 flex justify-between items-center text-sm font-medium text-gray-500">
+                <span id="node-badge" class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full uppercase tracking-wide text-xs">Início</span>
+                <span id="patient-info">Paciente: Seu Benedito, 72 anos</span>
+            </div>
+
+            <div class="p-6 md:p-8">
+                
+                <!-- Feedback Box (Hidden initially) -->
+                <div id="feedback-box" class="hidden mb-8 p-5 rounded-lg border-l-4">
+                    <h3 class="font-bold text-lg mb-2 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                        </svg>
+                        Resultado da Decisão
+                    </h3>
+                    <div id="feedback-text" class="text-gray-800 leading-relaxed"></div>
+                </div>
+
+                <!-- Scenario Content -->
+                <div id="scenario-content" class="fade-in">
+                    <h2 id="node-title" class="text-xl font-bold text-gray-900 mb-4 border-b pb-2"></h2>
+                    <div id="node-text" class="text-gray-700 leading-relaxed mb-6 space-y-4"></div>
+                    
+                    <div id="question-container" class="bg-blue-50 border border-blue-100 p-5 rounded-lg mb-6">
+                        <h3 id="node-question" class="font-semibold text-blue-900 text-lg"></h3>
+                    </div>
+
+                    <!-- Options -->
+                    <div id="options-container" class="space-y-3">
+                        <!-- Buttons injected via JS -->
+                    </div>
+                </div>
+
+                <!-- Analysis Content (Hidden initially) -->
+                <div id="analysis-content" class="hidden fade-in space-y-6">
+                    <div class="text-center mb-8">
+                        <h2 class="text-2xl font-bold text-gray-900">Análise do Caso 5</h2>
+                        <p class="text-gray-500">Fim do cenário interativo.</p>
+                    </div>
+
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                        <h3 class="font-bold text-lg text-blue-800 mb-2">Diagnóstico Final</h3>
+                        <p class="text-gray-700">Infecção do Trato Urinário (ITU) Complicada, associada a dispositivo invasivo (cateter vesical de demora). Agentes etiológicos suspeitos: flora diversificada, incluindo bacilos Gram-negativos não fermentadores (ex: <i>Pseudomonas</i>) protegidos por matriz de <b>Biofilme</b>.</p>
+                    </div>
+
+                    <div class="bg-red-50 p-6 rounded-lg border border-red-100">
+                        <h3 class="font-bold text-lg text-red-800 mb-3">Principais Erros Possíveis na Árvore</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li><b>Erro na Correlação Sítio-Patógeno:</b> Tratar uma ITU sondada como se fosse uma cistite simples comunitária. A literatura alerta que cenários complicados aumentam a diversidade etiológica e a resistência antimicrobiana.</li>
+                            <li><b>Erro na Fase Pré-Analítica:</b> Coletar urina de uma bolsa coletora antiga. Isso inviabiliza o diagnóstico correto, pois o material estará colonizado por inúmeras bactérias do ambiente e do biofilme que não necessariamente causaram a infecção atual.</li>
+                            <li><b>Ignorar Invasão Tecidual:</b> Trocar a sonda (remover o biofilme) é necessário, mas se o paciente já tem febre e tremores, o patógeno já realizou invasão tecidual e está na corrente sanguínea. Omitir o antibiótico sistêmico neste ponto leva à sepse.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-green-50 p-6 rounded-lg border border-green-100">
+                        <h3 class="font-bold text-lg text-green-800 mb-3">Pontos-chave de Aprendizado</h3>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-700 font-medium">
+                            <li><b>O Biofilme:</b> Estrutura fundamental na virulência, que protege as bactérias contra a resposta imune do hospedeiro e contra a ação dos antibióticos, favorecendo infecções persistentes. O controle do foco (troca da sonda) é essencial.</li>
+                            <li><b>Fatores Ambientais:</b> A presença de dispositivos invasivos altera o microbioma local e serve de ponte ("solução de continuidade") para que microrganismos evadam as defesas mecânicas como a micção.</li>
+                            <li><b>Sepse a partir de Dispositivos:</b> A disseminação via corrente sanguínea pode ter origem direta na colonização densa do cateter. A intervenção com remoção do foco e antibiótico ampliado salva vidas.</li>
+                        </ol>
+                    </div>
+
+                    <div class="pt-6 text-center">
+                        <button onclick="restartCase()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow transition-colors flex items-center justify-center mx-auto gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
+                            </svg>
+                            Reiniciar Caso Clínico
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white border-t py-6 text-center text-gray-500 text-sm">
+        <p>Baseado nos fundamentos de Microbiologia Clínica Aplicada. Rigorosamente de acordo com o material referenciado.</p>
+    </footer>
+
+    <script>
+        // Estrutura de dados do Caso 5
+        const caseData = {
+            1: {
+                title: "Apresentação Inicial",
+                text: "<p><b>Contexto:</b> Você está de plantão na UBS.</p><p><b>Paciente:</b> Seu Benedito, 72 anos, em uso crônico de dispositivo invasivo (cateter vesical de demora) devido a uma hiperplasia prostática.</p><p><b>História Clínica:</b> Trazido pela filha com relato de confusão mental aguda, febre (38,2°C), calafrios e urina francamente turva e com odor fétido na bolsa coletora há 24 horas.</p><p><b>Raciocínio Clínico:</b> Trata-se de uma Infecção do Trato Urinário Complicada. Conforme o material, fatores ambientais como a <b>presença de dispositivos invasivos</b> alteram a correlação sítio-patógeno. Em cenários complicados, há aumento da diversidade etiológica, incluindo flora mais resistente e bacilos Gram-negativos não fermentadores. Além disso, o próprio cateter abriga o <b>biofilme</b>: uma estrutura que protege a bactéria contra antibióticos e a resposta imune. Os sintomas sistêmicos (febre e delírio) provam que já houve invasão tecidual severa.</p>",
+                question: "Baseado nestes determinantes fisiopatológicos, qual deve ser a sua conduta inicial na UBS?",
+                options: [
+                    { text: "A) Iniciar tratamento empírico simples direcionado apenas para a E. coli comunitária e manter a mesma sonda, pois a bexiga é anatomicamente a mesma.", nextNode: 2 },
+                    { text: "B) Coletar urina abrindo a torneira da bolsa coletora antiga (fase pré-analítica) e aguardar o resultado da cultura antes de iniciar antibióticos.", nextNode: 3 },
+                    { text: "C) Realizar apenas a troca da sonda para remover o biofilme e dar alta, já que bactérias em sondados representam apenas colonização.", nextNode: 4 },
+                    { text: "D) Trocar a sonda (controle de foco/biofilme), coletar cultura adequadamente da nova sonda recém-passada e iniciar terapia empírica ampliada (cobrindo patógenos resistentes).", nextNode: 5 }
+                ]
+            },
+            2: {
+                feedback: "<b>Totalmente incorreta (A).</b> Erro etiológico e de controle de foco. O PDF alerta que o cenário complicado traz resistência e diversidade (não-fermentadores). O antibiótico simples não atuou, e o biofilme espesso da sonda velha bloqueou qualquer ação medicamentosa que restasse.",
+                feedbackType: "error",
+                title: "Falha Terapêutica por Espectro e Foco",
+                text: "<p><b>Progressão Clínica:</b> O microrganismo continuou a replicação e evadiu as defesas. Em 48 horas, o dano ao hospedeiro mediado pela resposta imune escala brutalmente. Benedito retorna à UBS em franca sepse (PA 70x40 mmHg, letárgico, taquicárdico).</p>",
+                question: "O paciente agora apresenta disfunção orgânica potencialmente fatal. Como agir?",
+                options: [
+                    { text: "A) Dobrar a dose do mesmo antibiótico comunitário para forçar a penetração no biofilme.", nextNode: 6 },
+                    { text: "B) Trocar a via oral para intramuscular, mantendo o mesmo remédio comunitário, para absorver mais rápido.", nextNode: 6 },
+                    { text: "C) Encaminhar o paciente via carro da família com uma carta, omitindo qualquer medicação na UBS.", nextNode: 7 },
+                    { text: "D) Estabilizar hemodinamicamente com fluidos na UBS, administrar antibiótico parenteral de amplo espectro empírico imediatamente e regular urgência via SAMU.", nextNode: 8 }
+                ]
+            },
+            3: {
+                feedback: "<b>Incorreta, mas plausível (B).</b> Coletar exames é essencial, mas coletar de bolsa velha é um dos erros mais graves da fase pré-analítica (amostra estará contaminada por flora de estagnação). Ademais, atrasar ATB com paciente febril propicia invasão tecidual ininterrupta.",
+                feedbackType: "warning",
+                title: "Atraso e Erro Pré-Analítico",
+                text: "<p><b>Progressão Clínica:</b> O laboratório descarta a urina por contaminação e o paciente, sem cobertura, piora. As bactérias ultrapassaram a mucosa e fizeram translocação. Benedito chega à UBS no terceiro dia em choque séptico.</p>",
+                question: "O atraso diagnóstico permitiu a resposta inflamatória sistêmica desregulada. Qual o protocolo de resgate?",
+                options: [
+                    { text: "A) Ligar no laboratório e exigir que cultivem a amostra contaminada para ter um norte.", nextNode: 6 },
+                    { text: "B) Esperar a melhora espontânea aplicando apenas dipirona venosa para a febre.", nextNode: 6 },
+                    { text: "C) Encaminhar para o hospital mais próximo por meios próprios sem instalar fluidos.", nextNode: 7 },
+                    { text: "D) Reconhecer a emergência tempo-dependente: acesso venoso para infusão de fluidos, administração empírica do ATB de amplo espectro na UBS e acionamento de unidade avançada.", nextNode: 8 }
+                ]
+            },
+            4: {
+                feedback: "<b>Correta, mas subótima (C).</b> Você removeu o biofilme da sonda antiga e acertou em não superestimar a colonização da urina, MAS o paciente tinha febre e calafrios! Isso significa que não era mais colonização (sem invasão), já era INFECÇÃO com invasão tecidual sistêmica.",
+                feedbackType: "warning",
+                title: "Omissão da Infecção Sistêmica",
+                text: "<p><b>Progressão Clínica:</b> Tirar o foco físico (sonda) foi ótimo, mas as bactérias que já estavam no parênquima renal e no sangue proliferaram sem o combate farmacológico. Ele retorna prostrado e com sinais precoces de bacteremia (disseminação pela corrente sanguínea).</p>",
+                question: "Como corrigir a falta do antimicrobiano sistêmico perante a invasão estabelecida?",
+                options: [
+                    { text: "A) Recolonizar a bexiga reinserindo a sonda antiga para competição bacteriana.", nextNode: 9 },
+                    { text: "B) Lavar a bexiga com soro fisiológico e aguardar.", nextNode: 9 },
+                    { text: "C) Focar exclusivamente no antibiótico local (pomadas) para não gerar resistência.", nextNode: 10 },
+                    { text: "D) Reconhecer a invasão sistêmica, iniciar antibiótico empírico para ITU complicada na UBS e transferir para acompanhamento hospitalar devido à falha clínica primária.", nextNode: 11 }
+                ]
+            },
+            5: {
+                feedback: "<b>Correta e ideal (D).</b> Integração perfeita dos três pilares: microrganismo (espectro resistente), hospedeiro (idoso) e ambiente (dispositivo/biofilme). O diagnóstico correto na fase pré-analítica e o controle do foco (troca da sonda) garantiram o sucesso.",
+                feedbackType: "success",
+                title: "A Fisiopatologia Aplicada ao Foco",
+                text: "<p><b>Progressão Clínica:</b> No quarto dia de tratamento empírico adequado, Benedito está ótimo, sem febre e com urina clara na nova sonda. A cultura chega atestando crescimento de <i>Pseudomonas</i> spp. (bacilo Gram-negativo não fermentador), sensível ao antibiótico que você escolheu. A filha pergunta: \"Doutor, por que ele teve algo tão perigoso se ano passado minha mãe teve infecção de urina e resolveu só com um comprimido?\"</p>",
+                question: "Com base na fisiopatologia da microbiologia, como você a educa?",
+                options: [
+                    { text: "A) 'Idosos acamados sempre pegam superbactérias do próprio ar de casa, é inevitável.'", nextNode: 12 },
+                    { text: "B) 'A bactéria da bexiga sofreu uma mutação genética induzida unicamente pela idade avançada dele.'", nextNode: 12 },
+                    { text: "C) 'Ele teve apenas azar imunológico de não produzir os mesmos linfócitos que a sua mãe.'", nextNode: 13 },
+                    { text: "D) 'A presença do cateter invasivo cria um biofilme - um escudo forte que protege as bactérias e altera a flora. Isso exige a troca da sonda e uso de remédios mais fortes, algo que a sua mãe não tinha.'", nextNode: 14 }
+                ]
+            },
+            6: {
+                feedback: "Ignorar a base do choque (a infecção disseminada) e manter a conduta ineficaz por crença na dose destruiu qualquer janela de sobrevida.<br><br><b>Impacto Clínico:</b> A resposta imunológica levou a lesão tecidual severa por citocinas, falência de múltiplos órgãos e morte.",
+                feedbackType: "error",
+                title: "Desfecho Desfavorável: Falha Crítica em Sepse",
+                isFinal: true
+            },
+            7: {
+                feedback: "Encaminhar um paciente com disfunção orgânica potencialmente fatal sem oferecer estabilização (fluidos) e sem a primeira dose antimicrobiana constitui grave omissão médica. O dano é tempo-dependente.",
+                feedbackType: "error",
+                title: "Desfecho Subótimo: Omissão de Suporte Básico",
+                isFinal: true
+            },
+            8: {
+                feedback: "<b>Excelente reconhecimento da urgência (D).</b> A sepse representa a resposta desregulada e devastadora. A invasão maciça venceu as barreiras iniciais. Combater o choque inflamatório e instituir o ATB de amplo espectro empírico muda o desfecho.",
+                feedbackType: "success",
+                title: "Estabilização e Suporte Avançado",
+                text: "<p><b>Contexto:</b> O SAMU UTI está na porta e elogia sua conduta de ancoragem hídrica e terapia sistêmica precoce na UBS.</p>",
+                question: "Do ponto de vista microbiológico, por que a sepse aqui foi tão severa em contraste com colonização silenciosa?",
+                options: [
+                    { text: "A) Porque todo idoso sonda-dependente entrará em sepse a cada 30 dias obrigatoriamente.", nextNode: 15 },
+                    { text: "B) Porque todo antibiótico estimula a liberação imediata de biofilme no cérebro.", nextNode: 15 },
+                    { text: "C) Por ter sido um processo onde apenas toxinas isoladas atuaram, sem resposta do corpo.", nextNode: 16 },
+                    { text: "D) Porque o equilíbrio foi rompido. A resposta imune hiperativada contra as endotoxinas bacterianas na corrente sanguínea causou o próprio dano e colapso ao hospedeiro.", nextNode: 17 }
+                ]
+            },
+            9: {
+                feedback: "Reverter o processo invadindo novamente o tecido ou focando apenas em pomadas locais quando o paciente possui sintomas sistêmicos (febre, tremores) revela desconhecimento absoluto da disseminação hematogênica.",
+                feedbackType: "error",
+                title: "Desfecho Desfavorável: Retrocesso Clínico",
+                isFinal: true
+            },
+            10: {
+                feedback: "Invasão sistêmica que causa bacteremia / febre grave exige abordagem sistêmica. Antibióticos tópicos não atingem os tecidos profundos nem a corrente sanguínea.",
+                feedbackType: "error",
+                title: "Desfecho Desfavorável: Tratamento Insuficiente",
+                isFinal: true
+            },
+            11: {
+                feedback: "Você corrigiu sua percepção clínica a tempo. Entendeu que após a remoção do foco (biofilme), o resíduo invasivo causou bacteremia. A cobertura empírica imediata interceptou a progressão fatal.",
+                feedbackType: "success",
+                title: "Desfecho Adequado: Correção Terapêutica",
+                isFinal: true
+            },
+            12: {
+                feedback: "Falsas explicações deseducam a população e quebram o Stewardship. Não se trata de mutação natural ou 'ar', e sim da biologia comprovada de que dispositivos inertes abrigam biofilmes e selecionam não-fermentadores e enterobactérias resistentes.",
+                feedbackType: "error",
+                title: "Desfecho Desfavorável: Desinformação",
+                isFinal: true
+            },
+            13: {
+                feedback: "Atribuir exclusividade ao azar ou ao hospedeiro ignora completamente o peso formidável do fator ambiental neste caso: a presença do dispositivo físico contínuo que serve de estrada e fortaleza (biofilme) bacteriana.",
+                feedbackType: "warning",
+                title: "Desfecho Subótimo: Explicação Parcial",
+                isFinal: true
+            },
+            14: {
+                feedback: "Brilhante condução e educação médica! Você transferiu um conhecimento altamente técnico (fisiopatologia de biofilmes em dispositivos invasivos vs infecções de mucosa nativa) de forma clara, promovendo uso racional e compreensão familiar.",
+                feedbackType: "success",
+                title: "Desfecho Ideal: Excelência em Saúde Pública",
+                isFinal: true
+            },
+            15: {
+                feedback: "Totalmente incorreto de acordo com o material base. A idade altera o hospedeiro, mas infecção sistêmica nunca é obrigatória. O biofilme age localmente, não no cérebro isoladamente.",
+                feedbackType: "error",
+                title: "Desfecho Desfavorável: Desconhecimento Fisiopatológico",
+                isFinal: true
+            },
+            16: {
+                feedback: "O material é claro: 'o principal responsável pelo dano não é o microrganismo, mas a resposta inflamatória do hospedeiro'. Negligenciar a ação imunológica vasoplégica diminui o entendimento do processo séptico.",
+                feedbackType: "warning",
+                title: "Desfecho Subótimo: Visão Restrita",
+                isFinal: true
+            },
+            17: {
+                feedback: "Exatamente! Você domina o conceito central da doença infecciosa sistêmica. A sepse ocorre não apenas por injúria direta, mas porque as citocinas liberadas pelo sistema inato no intuito de destruir as bactérias acabam causando colapso vascular sistêmico.",
+                feedbackType: "success",
+                title: "Desfecho Adequado: Domínio Teórico e Prático",
+                isFinal: true
+            }
+        };
+
+        // Estado da Aplicação
+        let currentNodeId = 1;
+
+        // Elementos do DOM
+        const scenarioContent = document.getElementById('scenario-content');
+        const analysisContent = document.getElementById('analysis-content');
+        const feedbackBox = document.getElementById('feedback-box');
+        const feedbackText = document.getElementById('feedback-text');
+        const nodeTitle = document.getElementById('node-title');
+        const nodeText = document.getElementById('node-text');
+        const nodeQuestion = document.getElementById('node-question');
+        const questionContainer = document.getElementById('question-container');
+        const optionsContainer = document.getElementById('options-container');
+        const nodeBadge = document.getElementById('node-badge');
+
+        function renderNode(id) {
+            const node = caseData[id];
+            
+            // Atualizar o Badge visualmente
+            nodeBadge.innerText = `Nó ${id}`;
+
+            // Resetar animação
+            scenarioContent.classList.remove('fade-in');
+            void scenarioContent.offsetWidth; // Trigger reflow
+            scenarioContent.classList.add('fade-in');
+
+            // Feedback da decisão anterior (se houver)
+            if (node.feedback) {
+                feedbackText.innerHTML = node.feedback;
+                feedbackBox.classList.remove('hidden', 'bg-red-50', 'border-red-500', 'text-red-800', 'bg-yellow-50', 'border-yellow-500', 'text-yellow-800', 'bg-green-50', 'border-green-500', 'text-green-800');
+                
+                if (node.feedbackType === 'error') {
+                    feedbackBox.classList.add('bg-red-50', 'border-red-500', 'text-red-900');
+                } else if (node.feedbackType === 'warning') {
+                    feedbackBox.classList.add('bg-yellow-50', 'border-yellow-500', 'text-yellow-900');
+                } else {
+                    feedbackBox.classList.add('bg-green-50', 'border-green-500', 'text-green-900');
+                }
+            } else {
+                feedbackBox.classList.add('hidden');
+            }
+
+            // Checar se é o fim do caso
+            if (node.isFinal) {
+                scenarioContent.classList.add('hidden');
+                analysisContent.classList.remove('hidden');
+                
+                // Mostrar o feedback final mesmo na tela de análise, injetando acima
+                if(node.feedback) {
+                    feedbackBox.classList.remove('hidden');
+                    feedbackBox.classList.add('mb-8'); // Espaçamento extra
+                }
+                return;
+            }
+
+            // Preencher Conteúdo
+            nodeTitle.innerText = node.title;
+            nodeText.innerHTML = node.text || '';
+            nodeQuestion.innerText = node.question || '';
+            
+            if (node.question) {
+                questionContainer.classList.remove('hidden');
+            } else {
+                questionContainer.classList.add('hidden');
+            }
+
+            // Renderizar Opções
+            optionsContainer.innerHTML = '';
+            if (node.options) {
+                node.options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = "w-full text-left p-4 rounded-lg border border-gray-200 bg-white hover:bg-blue-50 hover:border-blue-300 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 hover:text-blue-900";
+                    btn.innerHTML = `<span>${opt.text}</span>`;
+                    btn.onclick = () => goToNode(opt.nextNode);
+                    optionsContainer.appendChild(btn);
+                });
+            }
+        }
+
+        function goToNode(id) {
+            currentNodeId = id;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            renderNode(id);
+        }
+
+        function restartCase() {
+            currentNodeId = 1;
+            analysisContent.classList.add('hidden');
+            scenarioContent.classList.remove('hidden');
+            feedbackBox.classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            renderNode(1);
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            renderNode(1);
+        });
+
+    </script>
+</body>
+</html>
