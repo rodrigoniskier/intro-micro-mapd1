@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caso Interativo: Microbiologia Clínica na UBS - Caso 4</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+        .fade-in {
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-blue-800 text-white shadow-md">
+        <div class="max-w-4xl mx-auto px-4 py-6 flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+            </svg>
+            <div>
+                <h1 class="text-2xl font-bold">Microbiologia Clínica Aplicada</h1>
+                <p class="text-sm text-blue-200">Treinamento de Raciocínio Clínico - Caso 4: Infecções Intra-abdominais</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow w-full max-w-4xl mx-auto px-4 py-8">
+        
+        <!-- App Container -->
+        <div id="app-container" class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+            
+            <!-- Progress/Status Bar -->
+            <div id="status-bar" class="bg-gray-50 px-6 py-3 border-b border-gray-100 flex justify-between items-center text-sm font-medium text-gray-500">
+                <span id="node-badge" class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full uppercase tracking-wide text-xs">Início</span>
+                <span id="patient-info">Paciente: Seu Carlos, 62 anos</span>
+            </div>
+
+            <div class="p-6 md:p-8">
+                
+                <!-- Feedback Box (Hidden initially) -->
+                <div id="feedback-box" class="hidden mb-8 p-5 rounded-lg border-l-4">
+                    <h3 class="font-bold text-lg mb-2 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                        </svg>
+                        Resultado da Decisão
+                    </h3>
+                    <div id="feedback-text" class="text-gray-800 leading-relaxed"></div>
+                </div>
+
+                <!-- Scenario Content -->
+                <div id="scenario-content" class="fade-in">
+                    <h2 id="node-title" class="text-xl font-bold text-gray-900 mb-4 border-b pb-2"></h2>
+                    <div id="node-text" class="text-gray-700 leading-relaxed mb-6 space-y-4"></div>
+                    
+                    <div id="question-container" class="bg-blue-50 border border-blue-100 p-5 rounded-lg mb-6">
+                        <h3 id="node-question" class="font-semibold text-blue-900 text-lg"></h3>
+                    </div>
+
+                    <!-- Options -->
+                    <div id="options-container" class="space-y-3">
+                        <!-- Buttons injected via JS -->
+                    </div>
+                </div>
+
+                <!-- Analysis Content (Hidden initially) -->
+                <div id="analysis-content" class="hidden fade-in space-y-6">
+                    <div class="text-center mb-8">
+                        <h2 class="text-2xl font-bold text-gray-900">Análise do Caso 4</h2>
+                        <p class="text-gray-500">Fim do cenário interativo.</p>
+                    </div>
+
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                        <h3 class="font-bold text-lg text-blue-800 mb-2">Diagnóstico Final</h3>
+                        <p class="text-gray-700">Infecção Intra-abdominal secundária a ruptura da integridade intestinal (abdome agudo perfurativo). Agentes etiológicos envolvidos: Flora <b>polimicrobiana</b> sinérgica (Enterobactérias aeróbias + Anaeróbios).</p>
+                    </div>
+
+                    <div class="bg-red-50 p-6 rounded-lg border border-red-100">
+                        <h3 class="font-bold text-lg text-red-800 mb-3">Principais Erros Possíveis na Árvore</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li><b>Erro de Espectro Polimicrobiano:</b> Tratar uma peritonite prescrevendo cobertura apenas para um grupo (ex: apenas enterobactérias ou apenas cocos Gram-positivos). A interação entre enterobactérias e anaeróbios aumenta ativamente a virulência.</li>
+                            <li><b>Omissão do Controle de Foco:</b> Acreditar que a farmacologia substitui a mecânica/cirurgia. O material-base é explícito: "o controle de foco infeccioso é indispensável para o sucesso terapêutico". Se o intestino está aberto vazando fezes, nenhum antibiótico reverterá a sepse.</li>
+                            <li><b>Tratar Cultura ao invés de Clínica:</b> No pós-operatório, tratar achados microbiológicos de laudos antigos quando o paciente já está curado clinicamente contraria os princípios do <i>Stewardship</i>.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-green-50 p-6 rounded-lg border border-green-100">
+                        <h3 class="font-bold text-lg text-green-800 mb-3">Pontos-chave de Aprendizado</h3>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-700 font-medium">
+                            <li><b>Densidade Microbiológica:</b> O trato gastrointestinal abriga a maior densidade de microrganismos do corpo humano. A ruptura de suas barreiras anatômicas resulta numa invasão peritoneal catastrófica.</li>
+                            <li><b>Sinergismo Bacteriano:</b> Em infecções intra-abdominais, a combinação de bactérias fermentadoras (enterobactérias) com anaeróbios cria um microambiente agressivo que piora o dano tecidual.</li>
+                            <li><b>Translocação Bacteriana:</b> Infecções graves abdominais são uma ponte rápida para a disseminação via corrente sanguínea (bacteremia e sepse), exigindo ação estabilizadora inicial imediata (reposição volêmica + antibiótico empírico adequado).</li>
+                        </ol>
+                    </div>
+
+                    <div class="pt-6 text-center">
+                        <button onclick="restartCase()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow transition-colors flex items-center justify-center mx-auto gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
+                            </svg>
+                            Reiniciar Caso Clínico
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white border-t py-6 text-center text-gray-500 text-sm">
+        <p>Baseado nos fundamentos de Microbiologia Clínica Aplicada. Rigorosamente de acordo com o material referenciado.</p>
+    </footer>
+
+    <script>
+        // Estrutura de dados do Caso 4
+        const caseData = {
+            1: {
+                title: "Apresentação Inicial",
+                text: "<p><b>Contexto:</b> Você está de plantão na UBS.</p><p><b>Paciente:</b> Seu Carlos, 62 anos, com histórico de doença diverticular.</p><p><b>História Clínica:</b> Chega à unidade amparado por familiares, relatando dor abdominal excruciante que começou no quadrante inferior esquerdo e agora se espalhou por toda a barriga. Apresenta febre (38,8°C), sudorese e abdome rígido (em tábua).</p><p><b>Raciocínio Clínico:</b> O trato gastrointestinal abriga a maior densidade de microrganismos do corpo humano. O quadro clínico de Seu Carlos é altamente sugestivo de ruptura da integridade intestinal (perfuração). Conforme o material, quando esses microrganismos invadem a cavidade abdominal, geram infecções polimicrobianas caracterizadas pela presença simultânea de <b>enterobactérias e anaeróbios</b>. O risco de translocação bacteriana e disseminação hematogênica (sepse) é iminente.</p>",
+                question: "Considerando a correlação sítio-patógeno e o estado do paciente, qual a melhor abordagem inicial na UBS?",
+                options: [
+                    { text: "A) Prescrever terapia empírica de amplo espectro voltada exclusivamente para cocos Gram-positivos e liberar o paciente para repouso domiciliar.", nextNode: 2 },
+                    { text: "B) Iniciar cobertura focada apenas em enterobactérias (como faria numa infecção urinária), pois são as bactérias predominantes, e pedir que ele retorne em 48h.", nextNode: 3 },
+                    { text: "C) Reconhecer a etiologia polimicrobiana (enterobactérias + anaeróbios), prescrever antibióticos corretos via oral na UBS e agendar um retorno para acompanhamento ambulatorial.", nextNode: 4 },
+                    { text: "D) Reconhecer a emergência cirúrgica (falha de barreira). Administrar primeira dose parenteral de antibiótico polimicrobiano (enterobactérias + anaeróbios), instalar acesso venoso e acionar SAMU para urgência cirúrgica.", nextNode: 5 }
+                ]
+            },
+            2: {
+                feedback: "<b>Totalmente incorreta (A).</b> Erro brutal de correlação sítio-patógeno. Gram-positivos dominam a pele; o trato gastrointestinal é o reino das enterobactérias e anaeróbios. Além disso, você liberou um paciente com abdome agudo perfurativo.",
+                feedbackType: "error",
+                title: "Erro de Espectro e Omissão",
+                text: "<p><b>Progressão Clínica:</b> Sem cobertura adequada e com o foco intestinal vazando continuamente na cavidade, Seu Carlos desenvolve sepse severa em questão de horas. O dano ao hospedeiro está sendo maciço, provocado diretamente pelas endotoxinas (lipopolissacarídeo) e indiretamente pela resposta inflamatória descontrolada.</p>",
+                question: "O paciente retorna na mesma noite, em estado de choque (PA 70x40 mmHg, obnubilado). Como corrigir este erro fatal?",
+                options: [
+                    { text: "A) Aumentar a dose do antibiótico para Gram-positivos, imaginando que o fármaco apenas não atingiu a concentração inibitória mínima (CIM).", nextNode: 6 },
+                    { text: "B) Suspender os antibióticos e tentar aplicar apenas corticoide para reverter a resposta inflamatória sistêmica.", nextNode: 6 },
+                    { text: "C) Fazer uma guia de encaminhamento de papel e dizer para a família levá-lo no carro particular o mais rápido possível.", nextNode: 7 },
+                    { text: "D) Instalar acessos venosos calibrosos, iniciar ressuscitação com fluidos pesada para combater o choque, aplicar antimicrobiano polimicrobiano imediato e solicitar transferência em UTI Móvel.", nextNode: 8 }
+                ]
+            },
+            3: {
+                feedback: "<b>Incorreta, mas plausível (B).</b> Embora as enterobactérias estejam presentes, as infecções intra-abdominais são tipicamente <i>polimicrobianas</i>. A literatura indica que a interação entre enterobactérias e anaeróbios aumenta substancialmente a virulência da infecção.",
+                feedbackType: "warning",
+                title: "Cobertura Parcial e Virulência Sinérgica",
+                text: "<p><b>Progressão Clínica:</b> O antibiótico eliminou as enterobactérias sensíveis, mas os anaeróbios prosperaram no tecido isquêmico do abdome agudo. No 2º dia, a família traz Seu Carlos de volta. Ele tem febre persistente e prostração profunda. Há clara disseminação sistêmica a partir do foco infeccioso não resolvido.</p>",
+                question: "O espectro microbiológico incompleto falhou. Qual a intervenção necessária?",
+                options: [
+                    { text: "A) Trocar o remédio atual por outro antibiótico mais forte, mas focado também só em enterobactérias.", nextNode: 6 },
+                    { text: "B) Pedir uma ultrassonografia ambulatorial e aguardar os resultados antes de mudar qualquer coisa.", nextNode: 6 },
+                    { text: "C) Interromper a terapia oral para não intoxicar o fígado e enviar ao hospital sem suporte inicial.", nextNode: 7 },
+                    { text: "D) Admitir o erro no espectro, iniciar imediatamente uma terapia combinada ou de amplo espectro (aeróbios + anaeróbios) venosa e proceder com regulação de urgência para o hospital.", nextNode: 8 }
+                ]
+            },
+            4: {
+                feedback: "<b>Correta, mas subótima (C).</b> Você acertou em cheio a fisiopatologia microbiológica (enterobactérias + anaeróbios), mas cometeu um erro de integração clínica crítico: faltou o controle do ambiente anatômico.",
+                feedbackType: "warning",
+                title: "A Ilusão Farmacológica",
+                text: "<p><b>Progressão Clínica:</b> Como o PDF orienta: <i>'o controle de foco infeccioso é indispensável para o sucesso terapêutico'</i>. O antibiótico sozinho é inútil contra fezes e bactérias vazando ininterruptamente de um intestino perfurado. Seu Carlos piora rapidamente, entra em translocação bacteriana volumosa e retorna à UBS em choque séptico grave.</p>",
+                question: "O antibiótico oral foi sobrepujado pela carga infecciosa contínua. Como manejar?",
+                options: [
+                    { text: "A) Mudar para a via intravenosa mantendo a paciente na UBS em observação contínua por mais 24h.", nextNode: 9 },
+                    { text: "B) Reduzir a dose para evitar sobrecarga renal provocada pela sepse.", nextNode: 9 },
+                    { text: "C) Assumir que se trata de uma superbactéria multirresistente do hospital (apesar dele vir da comunidade) e tentar drogas de última linha.", nextNode: 10 },
+                    { text: "D) Iniciar estabilização hemodinâmica robusta (soro venoso imediato), manter o espectro adequado venoso e efetivar a remoção de emergência para controle cirúrgico imediato.", nextNode: 11 }
+                ]
+            },
+            5: {
+                feedback: "<b>Correta e ideal (D).</b> Magistral! Você dominou o raciocínio clínico completo: identificou a quebra da barreira física, previu a flora polimicrobiana (aeróbios e anaeróbios intestinais) e providenciou a ponte segura para o indispensável controle cirúrgico de foco.",
+                feedbackType: "success",
+                title: "Integração Clínica Perfeita e o Pós-Alta",
+                text: "<p><b>Progressão Clínica:</b> Seu Carlos foi cirurgiado a tempo, teve o peritônio lavado (foco controlado) e tratou a infecção com sucesso no hospital. Vinte dias depois, ele retorna à sua UBS andando, sem dor, corado e feliz. Contudo, ele lhe entrega um laudo de cultura do líquido peritoneal colhido no dia da cirurgia, e a folha assusta: <i>'Crescimento de Escherichia coli multirresistente (produtora de ESBL)'</i>.</p>",
+                question: "Baseando-se nos princípios do Antibiotic Stewardship, o que você deve fazer diante deste achado microbiológico in vitro?",
+                options: [
+                    { text: "A) Prescrever imediatamente 14 dias de um antibiótico ultra-amplo direcionado a essa bactéria resistente, para erradicá-la do corpo dele.", nextNode: 12 },
+                    { text: "B) Exigir que ele retorne ao hospital para internação e tratamento intravenoso de erradicação, já que há uma superbactéria impressa no laudo.", nextNode: 12 },
+                    { text: "C) Solicitar exames de sangue diários na UBS e isolar o paciente na sala de triagem até que uma nova cultura dê negativa.", nextNode: 13 },
+                    { text: "D) Tranquilizar o paciente e não prescrever antimicrobianos. Explicar que a detecção de um microrganismo na cultura não implica tratamento se ele está clinicamente curado (infecção resolvida) e que tratar o 'papel' fomenta mais resistência.", nextNode: 14 }
+                ]
+            },
+            6: {
+                feedback: "Ignorar que a gravidade advém do erro de alvo microbiano (deixar as bactérias certas prosperarem livremente) destrói as chances do paciente. <br><br><b>Impacto Clínico:</b> O excesso de citocinas inflamatórias gerou disfunção de múltiplos órgãos secundária ao choque séptico. Óbito.",
+                feedbackType: "error",
+                title: "Desfecho Desfavorável: Erro Sucessivo Fatal",
+                isFinal: true
+            },
+            7: {
+                feedback: "Encaminhar um paciente séptico, com perfuração ativa, sem ofertar a estabilização hemodinâmica primária e a primeira dose de antimicrobiano é uma omissão clínica severa. A infecção ganha o sangue rapidamente.",
+                feedbackType: "error",
+                title: "Desfecho Subótimo: Omissão Grave no Resgate",
+                isFinal: true
+            },
+            8: {
+                feedback: "<b>Excelente reconhecimento de gravidade (D).</b> Diante da falha, você compreendeu que a infecção ultrapassou o sítio local e virou sistêmica (sepse). O controle agressivo da cascata inflamatória via fluido e antibiótico correto salvou o cenário antes da transferência.",
+                feedbackType: "success",
+                title: "Estabilização Sistêmica e Encaminhamento Seguro",
+                text: "<p><b>Contexto:</b> O SAMU chega para o transporte. O médico intervencionista elogia sua estabilização volumétrica inicial, pois a pressão do paciente já mostra sinais de leve recuperação devido à perfusão sistêmica reiniciada.</p>",
+                question: "Qual regra de microbiologia resume o motivo de precisarmos do hospital agora?",
+                options: [
+                    { text: "A) 'Toda infecção comunitária torna-se hospitalar em 24 horas'.", nextNode: 17 },
+                    { text: "B) 'A variação antigênica impede tratamentos na UBS'.", nextNode: 17 },
+                    { text: "C) 'O antibiótico não penetra na cavidade abdominal humana'.", nextNode: 18 },
+                    { text: "D) 'O controle de foco infeccioso (cirurgia) é indispensável para o sucesso terapêutico.'", nextNode: 19 }
+                ]
+            },
+            9: {
+                feedback: "Manter o paciente na UBS apenas com antibiótico, quando ele possui um 'vazamento' mecânico no intestino, viola totalmente a lógica. As fezes neutralizam o efeito do antibiótico e fornecem suprimento contínuo de novas colônias bacterianas.",
+                feedbackType: "error",
+                title: "Desfecho Desfavorável: Foco Ignorado",
+                isFinal: true
+            },
+            10: {
+                feedback: "A falha terapêutica não se deve a uma 'superbactéria resistente' improvável na comunidade, mas sim à gigantesca carga infecciosa contínua e não drenada (falta de controle de foco). Trocar o antibiótico não fechará o orifício intestinal.",
+                feedbackType: "error",
+                title: "Desfecho Desfavorável: Erro Conceitual de Foco",
+                isFinal: true
+            },
+            11: {
+                feedback: "Você corrigiu impecavelmente a rota! Assumiu que em infecções profundas estruturais, a integração clínica exige antibiótico + intervenção física cirúrgica. O paciente foi devidamente amparado na pior fase inflamatória.",
+                feedbackType: "success",
+                title: "Desfecho Adequado: Resgate Eficaz e Foco Compreendido",
+                isFinal: true
+            },
+            12: {
+                feedback: "Erro clássico e grave de <i>Stewardship</i>. A infecção foi curada pelo conjunto cirurgia + terapia hospitalar inicial. Prescrever antimicrobianos agora aniquilará a microbiota protetora normal do paciente, abrindo porta para infecções reais oportunistas, tratando apenas um pedaço de papel velho.",
+                feedbackType: "error",
+                title: "Desfecho Desfavorável: Tratando Laudos e Causando Resistência",
+                isFinal: true
+            },
+            13: {
+                feedback: "Gerar pânico no paciente e sobrecarregar o sistema terciário apenas por um laudo microbiológico sem correspondência clínica (paciente bem, sem febre, ferida operatória seca) denota desconhecimento da diferença entre infecção ativa e achado in vitro retrospectivo.",
+                feedbackType: "warning",
+                title: "Desfecho Subótimo: Custo e Pânico Injustificados",
+                isFinal: true
+            },
+            14: {
+                feedback: "Maestria no Stewardship e Integração Clínica! Como diz o texto: 'a detecção de um microrganismo em cultura não implica, necessariamente, indicação de tratamento'. A clínica é soberana. Sem sinais de invasão tecidual hoje, tratar a cultura seria focar em colonização residual inofensiva.",
+                feedbackType: "success",
+                title: "Desfecho Ideal: Excelência em Uso Racional",
+                isFinal: true
+            },
+            17: {
+                feedback: "Essas afirmações não possuem base na fisiopatologia da perfuração descrita. O tratamento contínuo falha mecanicamente sem sanear a fonte primária de contaminação.",
+                feedbackType: "error",
+                title: "Desfecho Desfavorável: Princípio Incorreto",
+                isFinal: true
+            },
+            18: {
+                feedback: "O antibiótico penetra sim, mas a carga bacteriana e o tecido necrótico (pus, fezes) suplantam a capacidade farmacológica da droga sem a drenagem correspondente.",
+                feedbackType: "warning",
+                title: "Desfecho Subótimo: Conceito Parcial",
+                isFinal: true
+            },
+            19: {
+                feedback: "Exatamente! Você ancorou seu raciocínio na pedra fundamental da microbiologia cirúrgica: sem controle de foco (remover o tecido morto/lavar peritônio/fechar a perfuração), nenhum arsenal de antibióticos vencerá a proliferação bacteriana.",
+                feedbackType: "success",
+                title: "Desfecho Adequado: Entendimento Fisiopatológico Integral",
+                isFinal: true
+            }
+        };
+
+        // Estado da Aplicação
+        let currentNodeId = 1;
+
+        // Elementos do DOM
+        const scenarioContent = document.getElementById('scenario-content');
+        const analysisContent = document.getElementById('analysis-content');
+        const feedbackBox = document.getElementById('feedback-box');
+        const feedbackText = document.getElementById('feedback-text');
+        const nodeTitle = document.getElementById('node-title');
+        const nodeText = document.getElementById('node-text');
+        const nodeQuestion = document.getElementById('node-question');
+        const questionContainer = document.getElementById('question-container');
+        const optionsContainer = document.getElementById('options-container');
+        const nodeBadge = document.getElementById('node-badge');
+
+        function renderNode(id) {
+            const node = caseData[id];
+            
+            // Atualizar o Badge visualmente
+            nodeBadge.innerText = `Nó ${id}`;
+
+            // Resetar animação
+            scenarioContent.classList.remove('fade-in');
+            void scenarioContent.offsetWidth; // Trigger reflow
+            scenarioContent.classList.add('fade-in');
+
+            // Feedback da decisão anterior (se houver)
+            if (node.feedback) {
+                feedbackText.innerHTML = node.feedback;
+                feedbackBox.classList.remove('hidden', 'bg-red-50', 'border-red-500', 'text-red-800', 'bg-yellow-50', 'border-yellow-500', 'text-yellow-800', 'bg-green-50', 'border-green-500', 'text-green-800');
+                
+                if (node.feedbackType === 'error') {
+                    feedbackBox.classList.add('bg-red-50', 'border-red-500', 'text-red-900');
+                } else if (node.feedbackType === 'warning') {
+                    feedbackBox.classList.add('bg-yellow-50', 'border-yellow-500', 'text-yellow-900');
+                } else {
+                    feedbackBox.classList.add('bg-green-50', 'border-green-500', 'text-green-900');
+                }
+            } else {
+                feedbackBox.classList.add('hidden');
+            }
+
+            // Checar se é o fim do caso
+            if (node.isFinal) {
+                scenarioContent.classList.add('hidden');
+                analysisContent.classList.remove('hidden');
+                
+                // Mostrar o feedback final mesmo na tela de análise, injetando acima
+                if(node.feedback) {
+                    feedbackBox.classList.remove('hidden');
+                    feedbackBox.classList.add('mb-8'); // Espaçamento extra
+                }
+                return;
+            }
+
+            // Preencher Conteúdo
+            nodeTitle.innerText = node.title;
+            nodeText.innerHTML = node.text || '';
+            nodeQuestion.innerText = node.question || '';
+            
+            if (node.question) {
+                questionContainer.classList.remove('hidden');
+            } else {
+                questionContainer.classList.add('hidden');
+            }
+
+            // Renderizar Opções
+            optionsContainer.innerHTML = '';
+            if (node.options) {
+                node.options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = "w-full text-left p-4 rounded-lg border border-gray-200 bg-white hover:bg-blue-50 hover:border-blue-300 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 hover:text-blue-900";
+                    btn.innerHTML = `<span>${opt.text}</span>`;
+                    btn.onclick = () => goToNode(opt.nextNode);
+                    optionsContainer.appendChild(btn);
+                });
+            }
+        }
+
+        function goToNode(id) {
+            currentNodeId = id;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            renderNode(id);
+        }
+
+        function restartCase() {
+            currentNodeId = 1;
+            analysisContent.classList.add('hidden');
+            scenarioContent.classList.remove('hidden');
+            feedbackBox.classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            renderNode(1);
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            renderNode(1);
+        });
+
+    </script>
+</body>
+</html>
