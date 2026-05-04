@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caso Interativo: Microbiologia Clínica na UBS - Caso 3</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+        .fade-in {
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-blue-800 text-white shadow-md">
+        <div class="max-w-4xl mx-auto px-4 py-6 flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+            </svg>
+            <div>
+                <h1 class="text-2xl font-bold">Microbiologia Clínica Aplicada</h1>
+                <p class="text-sm text-blue-200">Treinamento de Raciocínio Clínico - Caso 3: Pele e Partes Moles</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow w-full max-w-4xl mx-auto px-4 py-8">
+        
+        <!-- App Container -->
+        <div id="app-container" class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+            
+            <!-- Progress/Status Bar -->
+            <div id="status-bar" class="bg-gray-50 px-6 py-3 border-b border-gray-100 flex justify-between items-center text-sm font-medium text-gray-500">
+                <span id="node-badge" class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full uppercase tracking-wide text-xs">Início</span>
+                <span id="patient-info">Paciente: Dona Maria, 55 anos</span>
+            </div>
+
+            <div class="p-6 md:p-8">
+                
+                <!-- Feedback Box (Hidden initially) -->
+                <div id="feedback-box" class="hidden mb-8 p-5 rounded-lg border-l-4">
+                    <h3 class="font-bold text-lg mb-2 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                        </svg>
+                        Resultado da Decisão
+                    </h3>
+                    <div id="feedback-text" class="text-gray-800 leading-relaxed"></div>
+                </div>
+
+                <!-- Scenario Content -->
+                <div id="scenario-content" class="fade-in">
+                    <h2 id="node-title" class="text-xl font-bold text-gray-900 mb-4 border-b pb-2"></h2>
+                    <div id="node-text" class="text-gray-700 leading-relaxed mb-6 space-y-4"></div>
+                    
+                    <div id="question-container" class="bg-blue-50 border border-blue-100 p-5 rounded-lg mb-6">
+                        <h3 id="node-question" class="font-semibold text-blue-900 text-lg"></h3>
+                    </div>
+
+                    <!-- Options -->
+                    <div id="options-container" class="space-y-3">
+                        <!-- Buttons injected via JS -->
+                    </div>
+                </div>
+
+                <!-- Analysis Content (Hidden initially) -->
+                <div id="analysis-content" class="hidden fade-in space-y-6">
+                    <div class="text-center mb-8">
+                        <h2 class="text-2xl font-bold text-gray-900">Análise do Caso 3</h2>
+                        <p class="text-gray-500">Fim do cenário interativo.</p>
+                    </div>
+
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                        <h3 class="font-bold text-lg text-blue-800 mb-2">Diagnóstico Final</h3>
+                        <p class="text-gray-700">Celulite / Infecção de Pele e Partes Moles (IPPM) complicada por evolução para abscesso. Agente etiológico principal envolvido: Cocos Gram-positivos (ex: <i>Staphylococcus aureus</i> ou <i>Streptococcus</i> spp.), oriundos da microbiota da pele após quebra de barreira.</p>
+                    </div>
+
+                    <div class="bg-red-50 p-6 rounded-lg border border-red-100">
+                        <h3 class="font-bold text-lg text-red-800 mb-3">Principais Erros Possíveis na Árvore</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li><b>Erro de Microbiota (Sítio-Patógeno):</b> Tratar uma infecção superficial de pele (sem necrose/isquemia profunda) com antibióticos para anaeróbios ou enterobactérias, ignorando os patógenos residentes da pele (Gram-positivos).</li>
+                            <li><b>Ignorar Invasão Tecidual:</b> Prescrever apenas terapia tópica (pomada) para lesões que já apresentam rubor extenso, calor e sinais de resposta inflamatória, os quais indicam invasão tecidual além da epiderme.</li>
+                            <li><b>Negligenciar o Controle de Foco:</b> Tentar curar um abscesso (biofilme/pus) apenas com antibióticos orais. O material purulento impede a ação da droga, sendo o controle de foco (drenagem) estritamente essencial.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-green-50 p-6 rounded-lg border border-green-100">
+                        <h3 class="font-bold text-lg text-green-800 mb-3">Pontos-chave de Aprendizado</h3>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-700 font-medium">
+                            <li><b>Ruptura de Barreira:</b> A pele intacta é altamente eficaz. Uma simples solução de continuidade (arranhão) fornece a porta de entrada.</li>
+                            <li><b>O Papel do Hospedeiro:</b> Fatores do paciente, como comorbidades (diabetes) e estado imunológico, influenciam enormemente no desfecho, acelerando a multiplicação bacteriana.</li>
+                            <li><b>Dano Imune vs. Presença Bacteriana:</b> O dano ao hospedeiro frequentemente ocorre mediado pela resposta imune. Inflamação residual não significa falha terapêutica imediata, e antibióticos não devem ser trocados inadvertidamente apenas por vermelhidão residual se o quadro clínico global melhorou.</li>
+                        </ol>
+                    </div>
+
+                    <div class="pt-6 text-center">
+                        <button onclick="restartCase()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow transition-colors flex items-center justify-center mx-auto gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
+                            </svg>
+                            Reiniciar Caso Clínico
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white border-t py-6 text-center text-gray-500 text-sm">
+        <p>Baseado nos fundamentos de Microbiologia Clínica Aplicada. Rigorosamente de acordo com o material referenciado.</p>
+    </footer>
+
+    <script>
+        // Estrutura de dados do Caso 3
+        const caseData = {
+            1: {
+                title: "Apresentação Inicial",
+                text: "<p><b>Contexto:</b> Você está de plantão na UBS.</p><p><b>Paciente:</b> Dona Maria, 55 anos, diabética tipo 2 (fator do hospedeiro que altera o estado imunológico).</p><p><b>História Clínica:</b> Procura atendimento queixando-se de dor na perna direita. Relata que sofreu um arranhão em uma roseira há 4 dias. O local agora apresenta uma placa extensa de vermelhidão (eritema), calor intenso e inchaço (edema). Não há pus visível por enquanto.</p><p><b>Raciocínio Clínico:</b> A pele intacta constitui uma barreira altamente eficaz. No entanto, a solução de continuidade (arranhão) permitiu que microrganismos evitassem a remoção e aderissem às superfícies celulares. As infecções cutâneas mais comuns, especialmente as superficiais não isquêmicas, são causadas por bactérias da própria microbiota da pele, com amplo destaque para os cocos Gram-positivos (como gêneros <i>Staphylococcus</i> e <i>Streptococcus</i>).</p>",
+                question: "Qual a melhor abordagem empírica inicial para Dona Maria?",
+                options: [
+                    { text: "A) Prescrever terapia de amplo espectro cobrindo enterobactérias e anaeróbios, afinal ela se machucou na roseira e teve contato com o solo da comunidade.", nextNode: 2 },
+                    { text: "B) Solicitar hemocultura na UBS e mandar a paciente para casa fazer repouso até o laboratório confirmar a bactéria.", nextNode: 3 },
+                    { text: "C) Prescrever apenas uma pomada de antibiótico tópico para agir localmente no arranhão, minimizando reações adversas sistêmicas.", nextNode: 4 },
+                    { text: "D) Prescrever antibioticoterapia sistêmica (via oral) direcionada empiricamente para cocos Gram-positivos, cobrindo os patógenos clássicos de pele.", nextNode: 5 }
+                ]
+            },
+            2: {
+                feedback: "<b>Totalmente incorreta (A).</b> Erro de correlação sítio-patógeno. Anaeróbios e enterobactérias são os agentes das infecções intra-abdominais ou de lesões isquêmicas profundas. Infecções de pele de origem na comunidade com esta apresentação são tipicamente causadas por cocos Gram-positivos.",
+                feedbackType: "error",
+                title: "Escolha Empírica Inadequada",
+                text: "<p><b>Progressão Clínica:</b> O antibiótico errado não exerceu pressão sobre os Gram-positivos reais. Três dias depois, Dona Maria retorna trazida pelo filho. A vermelhidão da perna agora atinge o joelho, e ela apresenta febre alta, tremores e prostração severa. A diabetes (fator do hospedeiro) acelerou o processo.</p>",
+                question: "O microrganismo invadiu os tecidos e atingiu corrente sanguínea. Como corrigir o curso na UBS?",
+                options: [
+                    { text: "A) Manter o mesmo medicamento, porém dobrando a dose para aumentar o pico sérico dependente de concentração.", nextNode: 6 },
+                    { text: "B) Associar um antiparasitário e um corticoide potente para frear a inflamação rapidamente.", nextNode: 6 },
+                    { text: "C) Fazer encaminhamento simples de papel para o hospital e dizer ao filho que a leve no carro particular sem demora.", nextNode: 7 },
+                    { text: "D) Reconhecer a falha terapêutica, administrar a primeira dose de antibiótico focado no sítio (Gram-positivos parenterais, se disponível) e acionar SAMU por suspeita de sepse.", nextNode: 8 }
+                ]
+            },
+            3: {
+                feedback: "<b>Incorreta, mas plausível (B).</b> Hemoculturas são fundamentais em bacteremias suspeitas. Porém, em IPPMs agudas sem choque, atrasar a introdução de antibióticos para aguardar laudo laboratorial permite a livre multiplicação e liberação de toxinas bacterianas.",
+                feedbackType: "warning",
+                title: "Atraso Terapêutico",
+                text: "<p><b>Progressão Clínica:</b> A ausência da droga permitiu invasão maciça. No quarto dia de espera, o microrganismo começou a liberar enzimas agressivas (ex: hialuronidase, que degrada matriz extracelular). Dona Maria entra na UBS em cadeira de rodas, confusa, hipotensa e com a perna intensamente edemaciada.</p>",
+                question: "O quadro sugere evolução para choque e dano sistêmico. Como intervir agora?",
+                options: [
+                    { text: "A) Oferecer hidratação oral farta e observar por duas horas na UBS.", nextNode: 6 },
+                    { text: "B) Trocar o pedido de hemocultura por um raspado de pele, pois é mais rápido.", nextNode: 6 },
+                    { text: "C) Transferir imediatamente sem realizar nenhum procedimento na UBS para não mascarar a cultura lá no hospital.", nextNode: 7 },
+                    { text: "D) Instalar acesso venoso com infusão de fluidos, administrar a primeira dose de antibiótico intravenoso focado em infecção grave de pele e pedir vaga de urgência.", nextNode: 8 }
+                ]
+            },
+            4: {
+                feedback: "<b>Correta, mas subótima (C).</b> A inflamação exuberante (calor, rubor, inchaço) denota que a bactéria já fez <i>invasão tecidual</i> para camadas mais profundas (derme/subcutâneo). Pomadas tratam apenas a superfície epidérmica externa.",
+                feedbackType: "warning",
+                title: "Omissão da Invasão Tecidual",
+                text: "<p><b>Progressão Clínica:</b> Como a pomada não atingiu as bactérias profundas, elas formaram cápsulas e estruturas locais. Dona Maria retorna após 5 dias. O rubor diminuiu um pouco, mas agora há uma área central endurecida, extremamente dolorosa e com flutuação evidente (um abscesso contendo pus e tecido desvitalizado).</p>",
+                question: "Levando em conta os princípios de Stewardship e sucesso terapêutico em abscessos, o que deve ser feito?",
+                options: [
+                    { text: "A) Trocar a pomada por um antibiótico potente via oral e pedir para ela usar compressas quentes em casa para o abscesso sumir.", nextNode: 9 },
+                    { text: "B) Manter a pomada, o surgimento de pus é o resultado da imunidade celular (fagócitos) vencendo a infecção naturalmente.", nextNode: 10 },
+                    { text: "C) Realizar a drenagem cirúrgica do abscesso na própria UBS, dando alta logo após sem prescrever nenhum antibiótico, já que o pus saiu.", nextNode: 11 },
+                    { text: "D) Realizar a drenagem do abscesso (controle de foco), limpar e prescrever antibiótico sistêmico complementar para tratar a celulite residual ao redor, com alvo em Gram-positivos.", nextNode: 12 }
+                ]
+            },
+            5: {
+                feedback: "<b>Correta e ideal (D).</b> Você acertou em cheio a correlação sítio-patógeno (pele -> Gram-positivos) e a gravidade (celulite exige penetração tecidual sistêmica através da via oral).",
+                feedbackType: "success",
+                title: "O Fluxo Ideal e a Resposta Imune",
+                text: "<p><b>Progressão Clínica:</b> Dona Maria seguiu a prescrição (curso de 7 dias). No 5º dia, ela volta ao retorno na UBS sorridente. A dor sumiu e ela anda normalmente. Contudo, ela aponta para a perna: \"Doutor, ainda está um pouco avermelhado e levemente morno aqui na beirada. Esse remédio está fraco, acho que a bactéria resistiu. Quero mudar para uma injeção.\"</p>",
+                question: "Baseado na fisiopatologia da resposta imune e da infecção local, como você responde à paciente?",
+                options: [
+                    { text: "A) Concordar e trocar imediatamente para um antibiótico parenteral (injetável) para não correr o risco de resistência bacteriana de fato.", nextNode: 13 },
+                    { text: "B) Associar um segundo antibiótico oral de classe diferente para cobrir a possibilidade de ser uma infecção polimicrobiana.", nextNode: 14 },
+                    { text: "C) Suspender o antibiótico hoje mesmo, pois a ausência de dor comprova o fim definitivo das bactérias no organismo dela.", nextNode: 15 },
+                    { text: "D) Explicar que a vermelhidão residual é parte do <i>dano mediado pela resposta imune</i> (inflamação curativa do hospedeiro), e manter o antibiótico atual até o final do prazo estipulado.", nextNode: 16 }
+                ]
+            },
+            6: {
+                feedback: "Medidas protelatórias ou erros seguidos em alvo microbiológico num paciente de risco (diabética) permitem a evasão sistêmica irrestrita.<br><br><b>Impacto Clínico:</b> O dano mediado pela resposta imune maciça à bacteremia levou ao colapso cardiovascular (sepse) refratário.",
+                feedbackType: "error",
+                title: "Desfecho Desfavorável: Falha Crítica",
+                isFinal: true
+            },
+            7: {
+                feedback: "A sepse é uma disfunção orgânica em progressão rápida. Apenas encaminhar, sem agir na estabilização ou controle primário do agente microbiano (ausência da primeira dose), aumenta dramaticamente a letalidade durante o transporte.",
+                feedbackType: "error",
+                title: "Desfecho Subótimo: Omissão Grave",
+                isFinal: true
+            },
+            8: {
+                feedback: "<b>Excelente resgate (D).</b> Você reconheceu que a invasão tecidual contornou os mecanismos de defesa. A sepse exige intervenção precoce em volume e antibiótico parenteral focado empiricamente antes da transferência.",
+                feedbackType: "success",
+                title: "Manejo da Disfunção Sistêmica",
+                text: "<p><b>Contexto:</b> O SAMU foi acionado. A paciente está com 80x50 de PA, taquicárdica e afebril (sinal de imunossupressão exausta).</p>",
+                question: "Como os mecanismos fisiopatológicos orientam a estabilização?",
+                options: [
+                    { text: "A) Prescrever uma fluoroquinolona via oral e liberar a paciente para ir com a família.", nextNode: 17 },
+                    { text: "B) Fazer coleta de hemocultura e esperar o resultado antes de dar o antibiótico no posto.", nextNode: 17 },
+                    { text: "C) Injetar o antibiótico intramuscular e aguardar o SAMU na recepção com ela sentada.", nextNode: 18 },
+                    { text: "D) Acesso calibroso, reposição fluida para combater o choque inflamatório e antibiótico parenteral imediato enquanto o resgate chega.", nextNode: 19 }
+                ]
+            },
+            9: {
+                feedback: "Como o material base afirma rigorosamente: \"o controle de foco infeccioso é indispensável para o sucesso terapêutico\". O abscesso protege as bactérias da droga (devido à falta de vascularização local e presença de biofilmes/material necrótico). Apenas dar remédio via oral falhará miseravelmente.",
+                feedbackType: "error",
+                title: "Desfecho Desfavorável: Falha em Controle de Foco",
+                isFinal: true
+            },
+            10: {
+                feedback: "Ignorar uma coleção purulenta permite que as bactérias utilizem as toxinas locais para se disseminarem ou causarem severa necrose da pele da paciente, aumentando o dano direto.",
+                feedbackType: "error",
+                title: "Desfecho Desfavorável: Negligência Clínica",
+                isFinal: true
+            },
+            11: {
+                feedback: "Drenar é excelente. Mas em um paciente de risco (comorbidade: diabetes) e com celulite prévia, não cobrir sistemicamente o tecido circunjacente após a drenagem deixa margem alta para recidiva da infecção. A IPPM ainda estava ativa.",
+                feedbackType: "warning",
+                title: "Desfecho Subótimo: Abordagem Incompleta",
+                isFinal: true
+            },
+            12: {
+                feedback: "Conduta magistral! Você compreendeu que o abscesso é uma fortaleza bacteriana que o antibiótico não penetra bem. A drenagem (controle do foco) unida à medicação oral formou os pilares do sucesso terapêutico em IPPMs complicadas.",
+                feedbackType: "success",
+                title: "Desfecho Adequado: Resolução Definitiva",
+                isFinal: true
+            },
+            13: {
+                feedback: "Trocar terapias sem falha clínica real (paciente sem dor, febre cedeu, inflamação regredindo) devido à ansiedade do paciente contraria frontalmente a gestão de antimicrobianos. Promove seleção de resistência local e custos sem benefício.",
+                feedbackType: "error",
+                title: "Desfecho Desfavorável: Violação do Stewardship",
+                isFinal: true
+            },
+            14: {
+                feedback: "Infecções de pele superficiais originárias da comunidade em imunocompetentes relativos são tipicamente monomicrobianas. Adicionar outro antibiótico é um erro de raciocínio de espectro e altera negativamente a microbiota da paciente.",
+                feedbackType: "error",
+                title: "Desfecho Desfavorável: Ampliação Desnecessária",
+                isFinal: true
+            },
+            15: {
+                feedback: "Parar de tomar antibiótico precocemente antes da erradicação completa apenas pelo alívio dos sintomas permite recaída imediata e seleção perigosa de cepas resistentes a drogas da próxima vez.",
+                feedbackType: "error",
+                title: "Desfecho Desfavorável: Terapia Incompleta",
+                isFinal: true
+            },
+            16: {
+                feedback: "Manejo e educação perfeitos! Você relembrou o paciente do conceito fisiopatológico crucial: o dano muitas vezes é mediado pela resposta inflamatória do hospedeiro, e esse eritema (vermelhidão) pode demorar dias para desbotar mesmo após a bactéria estar controlada.",
+                feedbackType: "success",
+                title: "Desfecho Ideal: Educação e Cura",
+                isFinal: true
+            },
+            17: {
+                feedback: "Absoluta falta de reconhecimento do estágio de choque séptico. Tratar um colapso vascular sistêmico mediado pela imunidade desregulada com antibiótico via oral na recepção custará a vida da paciente.",
+                feedbackType: "error",
+                title: "Desfecho Desfavorável: Manejo Incompetente",
+                isFinal: true
+            },
+            18: {
+                feedback: "Via intramuscular é errática durante choque (pois a circulação periférica está comprometida). Ela precisa de acesso venoso com volume para combater a resposta vasoplégica mediada pelas citocinas.",
+                feedbackType: "error",
+                title: "Desfecho Subótimo: Absorção Comprometida",
+                isFinal: true
+            },
+            19: {
+                feedback: "Resgate perfeito na atenção primária. Você identificou a progressão para sepse grave, interveio nos dois eixos (hidratação e antibiótico parenteral direto no sangue) e coordenou o nível de atenção superior com sucesso.",
+                feedbackType: "success",
+                title: "Desfecho Adequado: Sepse Controlada",
+                isFinal: true
+            }
+        };
+
+        // Estado da Aplicação
+        let currentNodeId = 1;
+
+        // Elementos do DOM
+        const scenarioContent = document.getElementById('scenario-content');
+        const analysisContent = document.getElementById('analysis-content');
+        const feedbackBox = document.getElementById('feedback-box');
+        const feedbackText = document.getElementById('feedback-text');
+        const nodeTitle = document.getElementById('node-title');
+        const nodeText = document.getElementById('node-text');
+        const nodeQuestion = document.getElementById('node-question');
+        const questionContainer = document.getElementById('question-container');
+        const optionsContainer = document.getElementById('options-container');
+        const nodeBadge = document.getElementById('node-badge');
+
+        function renderNode(id) {
+            const node = caseData[id];
+            
+            // Atualizar o Badge visualmente
+            nodeBadge.innerText = `Nó ${id}`;
+
+            // Resetar animação
+            scenarioContent.classList.remove('fade-in');
+            void scenarioContent.offsetWidth; // Trigger reflow
+            scenarioContent.classList.add('fade-in');
+
+            // Feedback da decisão anterior (se houver)
+            if (node.feedback) {
+                feedbackText.innerHTML = node.feedback;
+                feedbackBox.classList.remove('hidden', 'bg-red-50', 'border-red-500', 'text-red-800', 'bg-yellow-50', 'border-yellow-500', 'text-yellow-800', 'bg-green-50', 'border-green-500', 'text-green-800');
+                
+                if (node.feedbackType === 'error') {
+                    feedbackBox.classList.add('bg-red-50', 'border-red-500', 'text-red-900');
+                } else if (node.feedbackType === 'warning') {
+                    feedbackBox.classList.add('bg-yellow-50', 'border-yellow-500', 'text-yellow-900');
+                } else {
+                    feedbackBox.classList.add('bg-green-50', 'border-green-500', 'text-green-900');
+                }
+            } else {
+                feedbackBox.classList.add('hidden');
+            }
+
+            // Checar se é o fim do caso
+            if (node.isFinal) {
+                scenarioContent.classList.add('hidden');
+                analysisContent.classList.remove('hidden');
+                
+                // Mostrar o feedback final mesmo na tela de análise, injetando acima
+                if(node.feedback) {
+                    feedbackBox.classList.remove('hidden');
+                    feedbackBox.classList.add('mb-8'); // Espaçamento extra
+                }
+                return;
+            }
+
+            // Preencher Conteúdo
+            nodeTitle.innerText = node.title;
+            nodeText.innerHTML = node.text || '';
+            nodeQuestion.innerText = node.question || '';
+            
+            if (node.question) {
+                questionContainer.classList.remove('hidden');
+            } else {
+                questionContainer.classList.add('hidden');
+            }
+
+            // Renderizar Opções
+            optionsContainer.innerHTML = '';
+            if (node.options) {
+                node.options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = "w-full text-left p-4 rounded-lg border border-gray-200 bg-white hover:bg-blue-50 hover:border-blue-300 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 hover:text-blue-900";
+                    btn.innerHTML = `<span>${opt.text}</span>`;
+                    btn.onclick = () => goToNode(opt.nextNode);
+                    optionsContainer.appendChild(btn);
+                });
+            }
+        }
+
+        function goToNode(id) {
+            currentNodeId = id;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            renderNode(id);
+        }
+
+        function restartCase() {
+            currentNodeId = 1;
+            analysisContent.classList.add('hidden');
+            scenarioContent.classList.remove('hidden');
+            feedbackBox.classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            renderNode(1);
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            renderNode(1);
+        });
+
+    </script>
+</body>
+</html>
