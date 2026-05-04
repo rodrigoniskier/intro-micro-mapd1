@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caso Interativo: Microbiologia Clínica na UBS - Caso 2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+        .fade-in {
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-blue-800 text-white shadow-md">
+        <div class="max-w-4xl mx-auto px-4 py-6 flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+            </svg>
+            <div>
+                <h1 class="text-2xl font-bold">Microbiologia Clínica Aplicada</h1>
+                <p class="text-sm text-blue-200">Treinamento de Raciocínio Clínico - Caso 2: Trato Respiratório</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow w-full max-w-4xl mx-auto px-4 py-8">
+        
+        <!-- App Container -->
+        <div id="app-container" class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+            
+            <!-- Progress/Status Bar -->
+            <div id="status-bar" class="bg-gray-50 px-6 py-3 border-b border-gray-100 flex justify-between items-center text-sm font-medium text-gray-500">
+                <span id="node-badge" class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full uppercase tracking-wide text-xs">Início</span>
+                <span id="patient-info">Paciente: Sr. João, 68 anos</span>
+            </div>
+
+            <div class="p-6 md:p-8">
+                
+                <!-- Feedback Box (Hidden initially) -->
+                <div id="feedback-box" class="hidden mb-8 p-5 rounded-lg border-l-4">
+                    <h3 class="font-bold text-lg mb-2 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                        </svg>
+                        Resultado da Decisão
+                    </h3>
+                    <div id="feedback-text" class="text-gray-800 leading-relaxed"></div>
+                </div>
+
+                <!-- Scenario Content -->
+                <div id="scenario-content" class="fade-in">
+                    <h2 id="node-title" class="text-xl font-bold text-gray-900 mb-4 border-b pb-2"></h2>
+                    <div id="node-text" class="text-gray-700 leading-relaxed mb-6 space-y-4"></div>
+                    
+                    <div id="question-container" class="bg-blue-50 border border-blue-100 p-5 rounded-lg mb-6">
+                        <h3 id="node-question" class="font-semibold text-blue-900 text-lg"></h3>
+                    </div>
+
+                    <!-- Options -->
+                    <div id="options-container" class="space-y-3">
+                        <!-- Buttons injected via JS -->
+                    </div>
+                </div>
+
+                <!-- Analysis Content (Hidden initially) -->
+                <div id="analysis-content" class="hidden fade-in space-y-6">
+                    <div class="text-center mb-8">
+                        <h2 class="text-2xl font-bold text-gray-900">Análise do Caso 2</h2>
+                        <p class="text-gray-500">Fim do cenário interativo.</p>
+                    </div>
+
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                        <h3 class="font-bold text-lg text-blue-800 mb-2">Diagnóstico Final</h3>
+                        <p class="text-gray-700">Pneumonia Adquirida na Comunidade (PAC) com evolução potencial para Sepse em caso de falha. Agente etiológico principal envolvido: <i>Streptococcus pneumoniae</i> (adaptado ao trato respiratório comunitário) ou bactérias atípicas.</p>
+                    </div>
+
+                    <div class="bg-red-50 p-6 rounded-lg border border-red-100">
+                        <h3 class="font-bold text-lg text-red-800 mb-3">Principais Erros Possíveis na Árvore</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li><b>Cobertura Hospitalar Injustificada:</b> Prescrever antimicrobianos para bacilos Gram-negativos não fermentadores em pneumonia comunitária (sem histórico hospitalar) contraria o raciocínio clínico da correlação sítio-patógeno.</li>
+                            <li><b>Atraso por Exames:</b> Esperar culturas (escarro) em infecção instalada em trato normalmente estéril (alvéolos) permite rápida disseminação e dano aos tecidos mediados pela resposta imune sistêmica.</li>
+                            <li><b>Falha no "Stewardship":</b> Ignorar a possibilidade de ajustar a terapia (descalonamento) quando se tem a cultura em mãos. O amplo espectro desnecessário destrói a microbiota normal.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-green-50 p-6 rounded-lg border border-green-100">
+                        <h3 class="font-bold text-lg text-green-800 mb-3">Pontos-chave de Aprendizado</h3>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-700 font-medium">
+                            <li><b>Barreiras e Fisiopatologia:</b> O trato respiratório inferior (alvéolos) é estéril. Infecção exige que o patógeno ultrapasse as defesas primárias (fagócitos locais e fluxo mucociliar).</li>
+                            <li><b>Terapia Empírica Focada:</b> O tratamento baseia-se na identificação da porta de entrada e se a infecção veio da comunidade ou hospital, definindo o espectro microbiano esperado.</li>
+                            <li><b>Uso Racional (Stewardship):</b> Duração apropriada do tratamento garante a erradicação do microrganismo, evitando que cepas selecionadas por tratamento muito curto resistam e causem recaída clinicamente pior.</li>
+                        </ol>
+                    </div>
+
+                    <div class="pt-6 text-center">
+                        <button onclick="restartCase()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow transition-colors flex items-center justify-center mx-auto gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
+                            </svg>
+                            Reiniciar Caso Clínico
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white border-t py-6 text-center text-gray-500 text-sm">
+        <p>Baseado nos fundamentos de Microbiologia Clínica Aplicada. Rigorosamente de acordo com o material referenciado.</p>
+    </footer>
+
+    <script>
+        // Estrutura de dados do Caso 2
+        const caseData = {
+            1: {
+                title: "Apresentação Inicial",
+                text: "<p><b>Contexto:</b> Você está de plantão em uma UBS.</p><p><b>Paciente:</b> Sr. João, 68 anos, ex-tabagista.</p><p><b>História Clínica:</b> Relata tosse produtiva com expectoração amarelada, febre alta aferida (38,5°C) e falta de ar (dispneia) iniciadas há 3 dias. Mora na comunidade e não esteve internado nos últimos anos.</p><p><b>Raciocínio Clínico:</b> Trata-se de uma suspeita de Pneumonia Adquirida na Comunidade (PAC). O trato respiratório apresenta um gradiente microbiológico: vias superiores são colonizadas por microbiota diversa, mas os alvéolos pulmonares (trato inferior) são estéreis em condições normais. A infecção ocorre quando microrganismos ultrapassam barreiras de defesa. Na PAC, há predominância de bactérias adaptadas ao trato respiratório humano, sendo clássico o <i>Streptococcus pneumoniae</i> (coco Gram-positivo), além de micro-organismos atípicos. Diferente das pneumonias associadas ao ambiente hospitalar, a presença de bacilos Gram-negativos não fermentadores e bactérias multirresistentes é incomum aqui, dada a ausência de pressão seletiva prévia do hospital.</p>",
+                question: "Qual é a melhor conduta inicial empírica para o Sr. João na UBS?",
+                options: [
+                    { text: "A) Iniciar imediatamente tratamento empírico com foco em bacilos Gram-negativos não fermentadores multirresistentes, pois causam as pneumonias mais severas e letais.", nextNode: 2 },
+                    { text: "B) Coletar escarro para cultura e aguardar o resultado para confirmar o agente antes de iniciar o antimicrobiano, evitando prescrição errada.", nextNode: 3 },
+                    { text: "C) Iniciar um tratamento de amplíssimo espectro que cubra enterobactérias, Pseudomonas hospitalares e anaeróbios abdominais, para não correr nenhum risco de errar o patógeno.", nextNode: 4 },
+                    { text: "D) Iniciar tratamento empírico direcionado para bactérias comunitárias adaptadas ao trato respiratório humano (como S. pneumoniae) e agentes atípicos.", nextNode: 5 }
+                ]
+            },
+            2: {
+                feedback: "<b>Totalmente incorreta (A).</b> O impacto clínico foi a falha terapêutica. Bacilos Gram-negativos não fermentadores são típicos de infecções do ambiente hospitalar, especialmente em pacientes ventilados (devido à pressão seletiva). O patógeno do Sr. João é comunitário e os antimicrobianos direcionados a não-fermentadores falharam contra o S. pneumoniae.",
+                feedbackType: "error",
+                title: "Escolha Empírica Inadequada",
+                text: "<p><b>Progressão Clínica:</b> Quarenta e oito horas após iniciar a cobertura inadequada, o Sr. João retorna amparado pelo filho. Ele está confuso, hipotenso (pressão muito baixa) e com extrema dificuldade respiratória. O processo infeccioso causou dano direto e desregulou gravemente o sistema imune (citocinas inflamatórias).</p>",
+                question: "Diante dessa piora sistêmica aguda, como você corrige o curso do tratamento?",
+                options: [
+                    { text: "A) Dobrar a dose do antimicrobiano hospitalar atual, acreditando ser uma questão de barreira celular no pulmão impedindo a penetração da droga.", nextNode: 6 },
+                    { text: "B) Suspender o antimicrobiano atual e iniciar um antifúngico potente, assumindo que a não resposta indica infecção fúngica oportunista.", nextNode: 6 },
+                    { text: "C) Encaminhá-lo imediatamente de carro para a emergência hospitalar regional, evitando administrar qualquer medicação na UBS para não interferir nos exames deles.", nextNode: 7 },
+                    { text: "D) Reconhecer a falha por erro etiológico, administrar a primeira dose de antimicrobiano parenteral adequado para PAC na UBS (se disponível) e solicitar transferência de urgência por suspeita de sepse.", nextNode: 8 }
+                ]
+            },
+            3: {
+                feedback: "<b>Incorreta, mas plausível (B).</b> O uso do diagnóstico microbiológico (exames) é fundamental, mas em infecções agudas invasivas o tratamento não pode esperar. A correlação sítio-patógeno é a base da terapia empírica, que <i>deve</i> ser iniciada antes da identificação definitiva.",
+                feedbackType: "warning",
+                title: "Atraso Diagnóstico e Terapêutico",
+                text: "<p><b>Progressão Clínica:</b> Enquanto esperava o laudo do escarro, o microrganismo continuou a invasão tecidual severa. O Sr. João retorna no terceiro dia com rebaixamento de nível de consciência, calafrios e grave insuficiência respiratória (sinais francos de sepse). A cultura ainda não chegou.</p>",
+                question: "Diante da iminência de choque, qual a conduta adequada agora?",
+                options: [
+                    { text: "A) Aumentar o aporte de oxigênio domiciliar e pedir que retorne para casa e aguarde mais um dia o laudo sair do laboratório.", nextNode: 6 },
+                    { text: "B) Iniciar um antipirético isolado e mandar o paciente deitar na sala de observação enquanto aguarda a equipe médica do próximo plantão.", nextNode: 6 },
+                    { text: "C) Solicitar o transporte de ambulância simples, optando por não realizar nenhuma conduta medicamentosa na UBS para que o hospital colete sangue puro.", nextNode: 7 },
+                    { text: "D) Administrar a primeira dose de terapia empírica contra bactérias de PAC grave imediatamente na UBS e transferi-lo com prioridade máxima por complicação orgânica sistêmica.", nextNode: 8 }
+                ]
+            },
+            4: {
+                feedback: "<b>Correta, mas subótima (C).</b> O Sr. João melhorou porque a imensa rede de amplo espectro também cobriu o <i>S. pneumoniae</i>. Contudo, isso contraria os princípios de <i>Antibiotic Stewardship</i>. Você submeteu o ambiente e a microbiota a uma pressão seletiva violenta e desnecessária.",
+                feedbackType: "warning",
+                title: "O Custo do Espectro Desnecessário",
+                text: "<p><b>Progressão Clínica:</b> O Sr. João está clinicamente muito melhor. Hoje, você recebe na UBS o laudo laboratorial da cultura de escarro inicial que atesta: crescimento apenas de <i>Streptococcus pneumoniae</i> sensível aos antimicrobianos comunitários simples (como betalactâmicos clássicos).</p>",
+                question: "O que você deve fazer com o esquema de amplo espectro prescrito, diante desse dado in vitro?",
+                options: [
+                    { text: "A) Manter o tratamento hospitalar de amplíssimo espectro até o final dos 14 dias, seguindo a lógica de que 'em time que está ganhando não se mexe'.", nextNode: 9 },
+                    { text: "B) Associar um segundo antibiótico específico para S. pneumoniae por precaução, dobrando a carga de drogas antimicrobianas.", nextNode: 9 },
+                    { text: "C) Pedir mais exames de cultura e prolongar o tratamento de amplo espectro indefinidamente até que todos os marcadores inflamatórios sanguíneos zerem.", nextNode: 10 },
+                    { text: "D) Ajustar a terapia com base nos dados microbiológicos (descalonar), trocando a droga de amplo espectro para um antimicrobiano de alvo restrito, guiado pelo antibiograma.", nextNode: 11 }
+                ]
+            },
+            5: {
+                feedback: "<b>Correta e ideal (D).</b> Você baseou perfeitamente sua decisão na correlação entre o compartimento corporal (alvéolos / comunidade) e o agente causal mais previsível. Isso confere o tratamento correto sem uso abusivo de amplo espectro.",
+                feedbackType: "success",
+                title: "O Fluxo Ideal e a Fisiopatologia",
+                text: "<p><b>Progressão Clínica:</b> No retorno em 4 dias, Sr. João relata grande alívio: não há mais falta de ar, a febre cedeu rapidamente e ele tem apenas uma tosse residual esparsa. 'Doutor', ele diz, 'já estou bom! A febre passou no segundo dia. Posso parar de tomar o remédio para não atacar meu estômago?'</p>",
+                question: "Baseado na fisiopatologia da resposta imune e na gestão de tratamento, o que você responde?",
+                options: [
+                    { text: "A) Pode suspender imediatamente, pois a interrupção da febre é a prova absoluta de que o microrganismo foi eliminado pela imunidade inata do corpo.", nextNode: 12 },
+                    { text: "B) Interrompa o uso hoje, mas dobre a dose caso a febre e o mal-estar retornem amanhã, gerenciando os sintomas sob demanda.", nextNode: 12 },
+                    { text: "C) Você precisa não só manter, mas agendar um raio-X diário na UBS; a opacidade da imagem precisa desaparecer por completo antes de suspendermos.", nextNode: 13 },
+                    { text: "D) Explicar que a melhora clínica indica controle inicial do dano gerado pelo sistema imune e bactérias, mas que a duração adequada do tratamento deve ser seguida à risca para garantir a total erradicação bacteriana e evitar resistência.", nextNode: 14 }
+                ]
+            },
+            6: {
+                feedback: "Sua conduta perpetuou o erro inicial no alvo patogênico e ignorou gravemente os indícios de infecção sistêmica disseminada e falência imune.<br><br><b>Impacto Clínico:</b> O excesso de citocinas inflamatórias agiu livremente nos tecidos (resposta inflamatória sistêmica). A sepse evoluiu para choque irreversível e disfunção de múltiplos órgãos.",
+                feedbackType: "error",
+                title: "Desfecho Desfavorável: Falha Crítica na Sepse",
+                isFinal: true
+            },
+            7: {
+                feedback: "Encaminhar um paciente séptico ou grave sem nenhuma intervenção de resgate prévia configura omissão. A sepse tem dano tecidual tempo-dependente. Cada hora sem o antimicrobiano empírico inicial adequado eleva exponencialmente a mortalidade.",
+                feedbackType: "error",
+                title: "Desfecho Subótimo: Omissão Terapêutica",
+                isFinal: true
+            },
+            8: {
+                feedback: "<b>Excelente resgate clínico (D).</b> Você reconheceu prontamente a iminência de disfunção de múltiplos órgãos decorrente da resposta inflamatória desregulada. O foco agora é salvar a vida com o controle antimicrobiano rápido da carga bacteriana.",
+                feedbackType: "success",
+                title: "Controle de Foco e Estabilização Inicial",
+                text: "<p><b>Contexto:</b> A central do SAMU alerta que a unidade avançada demorará pelo menos 35 minutos para chegar. O Sr. João está cada vez mais letárgico, a pressão arterial despencou devido à potente resposta vasoativa imune desencadeada pelas bactérias na corrente sanguínea.</p>",
+                question: "No contexto da UBS, além de administrar a droga antimicrobiana, qual suporte vital da resposta fisiopatológica é crítico enquanto a ambulância não chega?",
+                options: [
+                    { text: "A) Apenas deixar o paciente reclinado em decúbito dorsal sem intervenções hídricas para não 'afogar o pulmão'.", nextNode: 15 },
+                    { text: "B) Oferecer água com açúcar por via oral para melhorar a perfusão do sistema nervoso central depletado.", nextNode: 15 },
+                    { text: "C) Fazer o antibiótico intramuscular e tentar mandar de volta para casa ou dispensar o paciente rapidamente antes que piore ainda mais na UBS.", nextNode: 16 },
+                    { text: "D) Estabelecer acesso venoso periférico, iniciar infusão de fluidos intravenosos para compensar a hipotensão severa gerada por citocinas, além do antimicrobiano imediato.", nextNode: 17 }
+                ]
+            },
+            9: {
+                feedback: "Manter drogas de amplo espectro hospitalar contra patógeno sensível identificado comete um grave erro aos princípios de Antibiotic Stewardship.<br><br><b>Impacto Clínico:</b> O amplo espectro atuou como bomba no microbioma intestinal de João, eliminando a função protetora residente e permitindo colonização massiva por patógenos super-resistentes intestinais (oportunistas).",
+                feedbackType: "error",
+                title: "Desfecho Desfavorável: Dano Colateral",
+                isFinal: true
+            },
+            10: {
+                feedback: "Pedir uma bateria prolongada de exames repetidos postergando a correção da medicação apenas submete o sistema de saúde a estresse e ignora os achados diretos do laboratório. O atraso em ajustar para a via simples (descalonamento) é perda de oportunidade clínica.",
+                feedbackType: "warning",
+                title: "Desfecho Subótimo: Cascata Inútil",
+                isFinal: true
+            },
+            11: {
+                feedback: "O ato de <b>descalonar</b> a terapia (estreitar o foco após resultados de cultura) é dos mais avançados em Stewardship! Você garantiu que o S. pneumoniae recebesse a dose letal necessária, e impediu a destruição da microbiota defensora natural do Sr. João.",
+                feedbackType: "success",
+                title: "Desfecho Adequado: Respeito ao Stewardship",
+                isFinal: true
+            },
+            12: {
+                feedback: "A melhora clínica rápida deve-se à contenção incial dos danos e diminuição das toxinas ou resposta celular. Parar o medicamento cedo deixa subpopulações bacterianas ativas nos alvéolos, forçando rápida seleção de cepas resistentes a drogas e retorno agressivo da PAC.",
+                feedbackType: "error",
+                title: "Desfecho Desfavorável: Terapia Incompleta",
+                isFinal: true
+            },
+            13: {
+                feedback: "Radiografias em série até 'limpar a imagem' expõem a pessoa à radiação, encarecem custos para o SUS e ignoram a biologia: as lesões ou 'sombras' do dano imunológico aos alvéolos demoram semanas para clarear na imagem, muito depois do fim biológico da infecção.",
+                feedbackType: "warning",
+                title: "Desfecho Subótimo: Excesso Radiológico",
+                isFinal: true
+            },
+            14: {
+                feedback: "Conduta perfeita e centrada na educação em saúde! Você compreende que a fisiopatologia do dano (febre, dispneia) não reage cronologicamente idêntica à erradicação do microorganismo. A duração completa da terapia prescreve a garantia de uma via inferior perfeitamente purificada e microbiota preservada.",
+                feedbackType: "success",
+                title: "Desfecho Ideal: Excelência Clínica Integral",
+                isFinal: true
+            },
+            15: {
+                feedback: "A isquemia progressiva na sepse ocorre por falha da microcirculação, algo irreversível se negligenciado por horas. O antimicrobiano combaterá as bactérias amanhã, mas sem reposição hídrica intravenosa imediata (suporte sistêmico vital), o Sr. João perde os órgãos hoje.",
+                feedbackType: "error",
+                title: "Desfecho Desfavorável: Falha Hemodinâmica",
+                isFinal: true
+            },
+            16: {
+                feedback: "Forçar alta e suspender o amparo no momento mais crítico do choque séptico (resposta sistêmica hiperinflamatória severa) resulta em mortalidade fora do serviço de saúde, sem retaguarda. Abandono do suporte clínico essencial de base.",
+                feedbackType: "error",
+                title: "Desfecho Subótimo: Abandono Terapêutico",
+                isFinal: true
+            },
+            17: {
+                feedback: "Manejo da Sepse exemplar na atenção primária. Você alocou as etapas perfeitamente: identificação da gravidade + acesso + volume + antimicrobiano rápido (ação na infecção em si). Você salvou a vida do Sr. João e viabilizou um transporte protetivo.",
+                feedbackType: "success",
+                title: "Desfecho Adequado: Resgate Eficaz e Vida Salva",
+                isFinal: true
+            }
+        };
+
+        // Estado da Aplicação
+        let currentNodeId = 1;
+
+        // Elementos do DOM
+        const scenarioContent = document.getElementById('scenario-content');
+        const analysisContent = document.getElementById('analysis-content');
+        const feedbackBox = document.getElementById('feedback-box');
+        const feedbackText = document.getElementById('feedback-text');
+        const nodeTitle = document.getElementById('node-title');
+        const nodeText = document.getElementById('node-text');
+        const nodeQuestion = document.getElementById('node-question');
+        const questionContainer = document.getElementById('question-container');
+        const optionsContainer = document.getElementById('options-container');
+        const nodeBadge = document.getElementById('node-badge');
+
+        function renderNode(id) {
+            const node = caseData[id];
+            
+            // Atualizar o Badge visualmente
+            nodeBadge.innerText = `Nó ${id}`;
+
+            // Resetar animação
+            scenarioContent.classList.remove('fade-in');
+            void scenarioContent.offsetWidth; // Trigger reflow
+            scenarioContent.classList.add('fade-in');
+
+            // Feedback da decisão anterior (se houver)
+            if (node.feedback) {
+                feedbackText.innerHTML = node.feedback;
+                feedbackBox.classList.remove('hidden', 'bg-red-50', 'border-red-500', 'text-red-800', 'bg-yellow-50', 'border-yellow-500', 'text-yellow-800', 'bg-green-50', 'border-green-500', 'text-green-800');
+                
+                if (node.feedbackType === 'error') {
+                    feedbackBox.classList.add('bg-red-50', 'border-red-500', 'text-red-900');
+                } else if (node.feedbackType === 'warning') {
+                    feedbackBox.classList.add('bg-yellow-50', 'border-yellow-500', 'text-yellow-900');
+                } else {
+                    feedbackBox.classList.add('bg-green-50', 'border-green-500', 'text-green-900');
+                }
+            } else {
+                feedbackBox.classList.add('hidden');
+            }
+
+            // Checar se é o fim do caso
+            if (node.isFinal) {
+                scenarioContent.classList.add('hidden');
+                analysisContent.classList.remove('hidden');
+                
+                // Mostrar o feedback final mesmo na tela de análise, injetando acima
+                if(node.feedback) {
+                    feedbackBox.classList.remove('hidden');
+                    feedbackBox.classList.add('mb-8'); // Espaçamento extra
+                }
+                return;
+            }
+
+            // Preencher Conteúdo
+            nodeTitle.innerText = node.title;
+            nodeText.innerHTML = node.text || '';
+            nodeQuestion.innerText = node.question || '';
+            
+            if (node.question) {
+                questionContainer.classList.remove('hidden');
+            } else {
+                questionContainer.classList.add('hidden');
+            }
+
+            // Renderizar Opções
+            optionsContainer.innerHTML = '';
+            if (node.options) {
+                node.options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = "w-full text-left p-4 rounded-lg border border-gray-200 bg-white hover:bg-blue-50 hover:border-blue-300 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 hover:text-blue-900";
+                    btn.innerHTML = `<span>${opt.text}</span>`;
+                    btn.onclick = () => goToNode(opt.nextNode);
+                    optionsContainer.appendChild(btn);
+                });
+            }
+        }
+
+        function goToNode(id) {
+            currentNodeId = id;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            renderNode(id);
+        }
+
+        function restartCase() {
+            currentNodeId = 1;
+            analysisContent.classList.add('hidden');
+            scenarioContent.classList.remove('hidden');
+            feedbackBox.classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            renderNode(1);
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            renderNode(1);
+        });
+
+    </script>
+</body>
+</html>
