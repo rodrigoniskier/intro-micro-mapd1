@@ -1,1 +1,374 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caso Interativo: Microbiologia Clínica na UBS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+        .fade-in {
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
 
+    <!-- Header -->
+    <header class="bg-blue-800 text-white shadow-md">
+        <div class="max-w-4xl mx-auto px-4 py-6 flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+            </svg>
+            <div>
+                <h1 class="text-2xl font-bold">Microbiologia Clínica Aplicada</h1>
+                <p class="text-sm text-blue-200">Treinamento de Raciocínio Clínico na Atenção Primária</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow w-full max-w-4xl mx-auto px-4 py-8">
+        
+        <!-- App Container -->
+        <div id="app-container" class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+            
+            <!-- Progress/Status Bar -->
+            <div id="status-bar" class="bg-gray-50 px-6 py-3 border-b border-gray-100 flex justify-between items-center text-sm font-medium text-gray-500">
+                <span id="node-badge" class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full uppercase tracking-wide text-xs">Início</span>
+                <span id="patient-info">Paciente: Ana, 25 anos</span>
+            </div>
+
+            <div class="p-6 md:p-8">
+                
+                <!-- Feedback Box (Hidden initially) -->
+                <div id="feedback-box" class="hidden mb-8 p-5 rounded-lg border-l-4">
+                    <h3 class="font-bold text-lg mb-2 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                        </svg>
+                        Resultado da Decisão
+                    </h3>
+                    <div id="feedback-text" class="text-gray-800 leading-relaxed"></div>
+                </div>
+
+                <!-- Scenario Content -->
+                <div id="scenario-content" class="fade-in">
+                    <h2 id="node-title" class="text-xl font-bold text-gray-900 mb-4 border-b pb-2"></h2>
+                    <div id="node-text" class="text-gray-700 leading-relaxed mb-6 space-y-4"></div>
+                    
+                    <div id="question-container" class="bg-blue-50 border border-blue-100 p-5 rounded-lg mb-6">
+                        <h3 id="node-question" class="font-semibold text-blue-900 text-lg"></h3>
+                    </div>
+
+                    <!-- Options -->
+                    <div id="options-container" class="space-y-3">
+                        <!-- Buttons injected via JS -->
+                    </div>
+                </div>
+
+                <!-- Analysis Content (Hidden initially) -->
+                <div id="analysis-content" class="hidden fade-in space-y-6">
+                    <div class="text-center mb-8">
+                        <h2 class="text-2xl font-bold text-gray-900">Análise do Caso</h2>
+                        <p class="text-gray-500">Fim do cenário interativo.</p>
+                    </div>
+
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                        <h3 class="font-bold text-lg text-blue-800 mb-2">Diagnóstico Final</h3>
+                        <p class="text-gray-700">Infecção do Trato Urinário não complicada (Cistite) com potencial de evolução para pielonefrite/sepse caso o tratamento fosse postergado ou incorreto. Agente etiológico principal: <i>Escherichia coli</i>.</p>
+                    </div>
+
+                    <div class="bg-red-50 p-6 rounded-lg border border-red-100">
+                        <h3 class="font-bold text-lg text-red-800 mb-3">Principais Erros Possíveis na Árvore</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li><b>Tratar Cultura em vez de Clínica:</b> O erro mais comum demonstrado é achar que a presença do microrganismo no papel exige tratamento. A detecção não implica necessariamente indicação de tratamento.</li>
+                            <li><b>Errar a Correlação Sítio-Patógeno:</b> Iniciar tratamentos com alvo em bactérias Gram-positivas para o trato urinário inferior ignora que o compartimento é colonizado predominantemente por contiguidade com o intestino.</li>
+                            <li><b>Atraso Terapêutico:</b> Esperar a cultura em pacientes sintomáticos permite a invasão tecidual. A adesão ao hospedeiro, seguida de invasão e evasão do sistema imune, não perdoa atrasos.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-green-50 p-6 rounded-lg border border-green-100">
+                        <h3 class="font-bold text-lg text-green-800 mb-3">Pontos-chave de Aprendizado</h3>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-700 font-medium">
+                            <li><b>Diferenciação Crítica:</b> Colonização (sem invasão tecidual ou resposta inflamatória) vs Infecção (invasão, multiplicação e resposta).</li>
+                            <li><b>Raciocínio Empírico:</b> Inicia-se pela dedução do patógeno a partir do sítio e microbiotas locais, antes da identificação laboratorial.</li>
+                            <li><b>Uso Racional:</b> Não tratar exames de urina positivos em pacientes assintomáticos protege o microbioma humano e reduz a pressão seletiva que gera resistência.</li>
+                        </ol>
+                    </div>
+
+                    <div class="pt-6 text-center">
+                        <button onclick="restartCase()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow transition-colors flex items-center justify-center mx-auto gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
+                            </svg>
+                            Reiniciar Caso Clínico
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white border-t py-6 text-center text-gray-500 text-sm">
+        <p>Baseado nos fundamentos de Microbiologia Clínica Aplicada. Rigorosamente de acordo com o material referenciado.</p>
+    </footer>
+
+    <script>
+        // Estrutura de dados do caso baseada fielmente no modelo gerado
+        const caseData = {
+            1: {
+                title: "Apresentação Inicial",
+                text: "<p><b>Contexto:</b> Você está de plantão em uma UBS.</p><p><b>Paciente:</b> Ana, 25 anos, sem comorbidades.</p><p><b>História Clínica:</b> Refere dor ao urinar (disúria), aumento da frequência urinária e dor no baixo ventre há 2 dias. Nega febre, calafrios ou dor lombar.</p><p><b>Raciocínio Clínico:</b> Trata-se de uma infecção do trato urinário não complicada. Sabemos que as infecções do trato urinário representam um dos exemplos mais clássicos de previsibilidade etiológica. Em condições não complicadas, especialmente em mulheres jovens, o agente predominante é uma enterobactéria oriunda da microbiota intestinal. A espécie mais frequente é a <i>Escherichia coli</i>. Essa predominância ocorre devido à proximidade anatômica com o trato gastrointestinal e à presença de fatores de virulência (adesinas) que favorecem a adesão ao epitélio urinário. A escolha empírica adequada depende diretamente de correlacionar o sítio da infecção com os agentes mais prováveis.</p>",
+                question: "Qual é a melhor conduta inicial para Ana?",
+                options: [
+                    { text: "A) Iniciar imediatamente um tratamento empírico focado em cocos Gram-positivos e anaeróbios, devido à alta densidade desses microrganismos na região pélvica.", nextNode: 2 },
+                    { text: "B) Solicitar uma urocultura e aguardar o resultado laboratorial para iniciar a terapia, garantindo que não haverá erro na escolha do antimicrobiano.", nextNode: 3 },
+                    { text: "C) Solicitar urocultura, mas já iniciar imediatamente o tratamento empírico direcionado para enterobactérias.", nextNode: 4 },
+                    { text: "D) Iniciar tratamento empírico direcionado para enterobactérias (como E. coli), sem a necessidade de solicitar urocultura neste momento.", nextNode: 5 }
+                ]
+            },
+            2: {
+                feedback: "<b>Totalmente incorreta (A).</b> O impacto clínico foi a falha terapêutica. Cocos Gram-positivos e anaeróbios são típicos de infecções de pele e infecções intra-abdominais complexas, respectivamente. O patógeno provável aqui é uma enterobactéria.",
+                feedbackType: "error",
+                title: "Escolha Empírica Inadequada",
+                text: "<p><b>Progressão Clínica:</b> Três dias após iniciar o antibiótico para Gram-positivos/anaeróbios, Ana retorna à UBS. Ela agora apresenta febre (39°C), calafrios e dor lombar intensa. O processo infeccioso não foi controlado e ultrapassou as barreiras de defesa iniciais.</p>",
+                question: "Como você corrige o curso do tratamento agora?",
+                options: [
+                    { text: "A) Aumentar a dose do antibiótico atual, pois concentrações maiores podem superar a barreira de resistência bacteriana.", nextNode: 6 },
+                    { text: "B) Adicionar um antibiótico com cobertura para bacilos Gram-negativos não fermentadores multirresistentes, pois a falha inicial indica patógeno atípico.", nextNode: 6 },
+                    { text: "C) Suspender a medicação e encaminhá-la para a emergência hospitalar sem realizar nenhuma intervenção farmacológica na UBS.", nextNode: 7 },
+                    { text: "D) Reconhecer a falha terapêutica, administrar a primeira dose de antibiótico com ação contra enterobactérias na UBS (se disponível) e providenciar transferência de urgência por suspeita de disseminação sistêmica.", nextNode: 8 }
+                ]
+            },
+            3: {
+                feedback: "<b>Incorreta, mas plausível (B).</b> O medo da resistência bacteriana é válido, mas atrasar o tratamento em infecções sintomáticas permite a invasão tecidual. Na prática clínica, o tratamento frequentemente deve ser iniciado antes da confirmação microbiológica.",
+                feedbackType: "warning",
+                title: "Atraso Diagnóstico e Terapêutico",
+                text: "<p><b>Progressão Clínica:</b> Enquanto aguardava a cultura em casa, o equilíbrio foi rompido em favor do microrganismo. Ana retorna à UBS no terceiro dia com febre alta (39°C), prostração e dor lombar. O resultado da cultura ainda não chegou.</p>",
+                question: "Diante da piora clínica, qual a conduta adequada?",
+                options: [
+                    { text: "A) Manter a conduta expectante, solicitando que a paciente faça compressas até o resultado da cultura sair.", nextNode: 6 },
+                    { text: "B) Iniciar tratamento para patógenos respiratórios atípicos, pois a febre alta indica mudança do sítio de infecção.", nextNode: 6 },
+                    { text: "C) Dar um encaminhamento simples para o hospital, pedindo que a paciente vá por meios próprios sem intervenção prévia.", nextNode: 7 },
+                    { text: "D) Iniciar terapia empírica contra enterobactérias imediatamente na UBS (primeira dose) e coordenar transferência para emergência por complicação e risco sistêmico.", nextNode: 8 }
+                ]
+            },
+            4: {
+                feedback: "<b>Correta, mas subótima (C).</b> Você acertou o alvo microbiológico (enterobactéria), mas a solicitação de urocultura em cistite não complicada contraria os princípios do diagnóstico correto e uso racional de recursos (Stewardship).",
+                feedbackType: "warning",
+                title: "Excesso de Exames e o Dilema in vitro",
+                text: "<p><b>Progressão Clínica:</b> Ana iniciou o tratamento empírico adequado. No quinto dia, ela retorna à UBS completamente assintomática e curada. Contudo, o laboratório envia o resultado da cultura: crescimento de >100.000 UFC/mL de E. coli resistente ao antibiótico que ela acabou de usar com sucesso.</p>",
+                question: "O que você faz com esse laudo in vitro frente à paciente assintomática?",
+                options: [
+                    { text: "A) Trocar imediatamente o antibiótico da paciente para um que seja sensível no antibiograma.", nextNode: 9 },
+                    { text: "B) Prolongar a prescrição do mesmo antibiótico por mais 10 dias para garantir a erradicação.", nextNode: 9 },
+                    { text: "C) Solicitar uma nova urocultura para verificar se houve erro do laboratório antes de dar alta.", nextNode: 10 },
+                    { text: "D) Manter a alta clínica. A interpretação do antibiograma deve considerar o sítio e a farmacocinética; a droga pode ter atingido altas concentrações na urina in vivo, e a paciente não tem mais infecção.", nextNode: 11 }
+                ]
+            },
+            5: {
+                feedback: "<b>Correta e ideal (D).</b> Você utilizou a correlação sítio-patógeno como fundamento do raciocínio empírico, garantindo cobertura adequada sem abuso de antibióticos de amplo espectro.",
+                feedbackType: "success",
+                title: "O Fluxo Ideal: Stewardship na Prática",
+                text: "<p><b>Progressão Clínica:</b> Ana retorna no final do tratamento curto (3 dias). Relata resolução completa de todos os sintomas. No entanto, ela está preocupada: \"Doutor, minha vizinha disse que eu tenho que tomar o remédio por 14 dias para matar tudo e fazer um exame de urina para provar.\"</p>",
+                question: "Com base nos princípios de gestão racional de antimicrobianos (Stewardship), o que você orienta?",
+                options: [
+                    { text: "A) Concordar com a vizinha e prescrever mais 11 dias de antibiótico para evitar a seleção de cepas resistentes.", nextNode: 12 },
+                    { text: "B) Não estender o tratamento, mas concordar em pedir a cultura de controle para assegurar que a urina está estéril.", nextNode: 12 },
+                    { text: "C) Orientar que o antibiótico deveria ter sido suspenso no momento em que a dor parou, indicando que ela tomou doses desnecessárias.", nextNode: 13 },
+                    { text: "D) Manter a duração curta apropriada, explicar que a microbiota coloniza o corpo e que a presença de bactérias sem sintomas (colonização) não implica indicação de tratamento.", nextNode: 14 }
+                ]
+            },
+            6: {
+                feedback: "A conduta escolhida perpetuou o erro. O dano ao hospedeiro está ocorrendo diretamente pela multiplicação do microrganismo que não está sendo combatido.<br><br><b>Impacto Clínico:</b> A infecção, sem o controle de foco adequado, evoluirá rapidamente. A disseminação ocorre via corrente sanguínea, levando à bacteremia e sepse.",
+                feedbackType: "error",
+                title: "Desfecho Desfavorável: Falha Crítica",
+                isFinal: true
+            },
+            7: {
+                feedback: "A conduta reconheceu o perigo, mas falhou na intervenção. Encaminhar um paciente com sinais de alerta sistêmico sem tentar o controle inicial do foco retarda o tratamento. A gravidade de quadros com disseminação sistêmica exige início imediato de terapia empírica.",
+                feedbackType: "error",
+                title: "Desfecho Subótimo: Omissão",
+                isFinal: true
+            },
+            8: {
+                feedback: "<b>Correta e ideal para o cenário de resgate (D).</b> Você reconheceu a alteração do quadro. A disseminação via corrente sanguínea pode levar a bacteremia e sepse, uma disfunção orgânica potencialmente fatal mediada por resposta inflamatória sistêmica.",
+                feedbackType: "success",
+                title: "Caminho de Retorno: Manejo da Complicação",
+                text: "<p><b>Contexto:</b> Ao constatar os sinais de gravidade, você decide agir antes da ambulância chegar.</p>",
+                question: "Considerando a gravidade e o controle de foco, como agir na UBS?",
+                options: [
+                    { text: "A) Prescrever uma fluoroquinolona oral de amplo espectro para a paciente tomar em casa e cancelar a ambulância.", nextNode: 15 },
+                    { text: "B) Coletar hemoculturas na UBS e segurar a transferência até que você tenha certeza de qual é a bactéria.", nextNode: 15 },
+                    { text: "C) Fazer uma dose do antibiótico via intramuscular, dar alta e pedir que ela retorne se piorar.", nextNode: 16 },
+                    { text: "D) Administrar a primeira dose de antimicrobiano parenteral disponível na UBS focado no sítio provável e transferi-la imediatamente para suporte avançado.", nextNode: 17 }
+                ]
+            },
+            9: {
+                feedback: "Tratar uma urocultura positiva em paciente sem sintomas é tratar colonização, não infecção. A colonização ocorre sem invasão tecidual ou resposta inflamatória.<br><br><b>Impacto Clínico:</b> Você expôs a paciente aos riscos de toxicidade da medicação e fomentou a resistência bacteriana, que é impulsionada pela pressão seletiva dos antibióticos.",
+                feedbackType: "error",
+                title: "Desfecho Desfavorável: Tratando Papel",
+                isFinal: true
+            },
+            10: {
+                feedback: "Pedir nova cultura em paciente assintomática gera ansiedade e custos irrelevantes. A detecção de um microrganismo não implica indicação de tratamento.",
+                feedbackType: "warning",
+                title: "Desfecho Subótimo: Cascata de Exames",
+                isFinal: true
+            },
+            11: {
+                feedback: "Você evitou tratar a colonização. A interpretação do antibiograma exige cautela: o antibiótico pode ter tido sucesso in vivo (ex: alta concentração renal) mesmo parecendo resistente in vitro, ou o patógeno real já foi eliminado. A clínica é soberana.",
+                feedbackType: "success",
+                title: "Desfecho Adequado: Correção de Rota",
+                isFinal: true
+            },
+            12: {
+                feedback: "Ao prolongar o uso ou investigar a urina de forma desnecessária, você desrespeitou os princípios do Antibiotic Stewardship. A alteração da microbiota normal pelo uso prolongado favorece a colonização por patógenos oportunistas.",
+                feedbackType: "error",
+                title: "Desfecho Desfavorável: Abuso de Antimicrobianos",
+                isFinal: true
+            },
+            13: {
+                feedback: "Interromper a medicação de forma excessivamente precoce vai contra o princípio de 'duração adequada do tratamento'. Embora os sintomas desapareçam rápido, um tempo mínimo deve ser respeitado para garantir a erradicação do patógeno invasor e não apenas a redução da carga infecciosa.",
+                feedbackType: "warning",
+                title: "Desfecho Subótimo: Risco de Recidiva",
+                isFinal: true
+            },
+            14: {
+                feedback: "Resolução perfeita. Você garantiu o diagnóstico correto, a escolha adequada, a dose apropriada e a duração adequada. Além disso, educou a paciente de que bactérias em superfícies mucosas (colonização) exercem funções protetoras em condições fisiológicas.",
+                feedbackType: "success",
+                title: "Desfecho Ideal: Excelência Clínica",
+                isFinal: true
+            },
+            15: {
+                feedback: "Ignorar a resposta inflamatória desregulada da sepse e tentar tratar ambulatorialmente ou atrasar o cuidado para coletar exames não essenciais na UBS leva à disfunção de múltiplos órgãos.",
+                feedbackType: "error",
+                title: "Desfecho Desfavorável: Manejo Inadequado da Sepse",
+                isFinal: true
+            },
+            16: {
+                feedback: "Fazer a dose na UBS foi correto, mas a alta médica para um paciente com sinais de disseminação sistêmica representa risco fatal por dano mediado pela resposta inflamatória sistêmica.",
+                feedbackType: "error",
+                title: "Desfecho Subótimo: Alta Precoce",
+                isFinal: true
+            },
+            17: {
+                feedback: "Excelente raciocínio de controle de danos. Diante da falha inicial, você instituiu terapia direcionada à possível bacteremia e sepse de forma ágil, transferindo a paciente com segurança.",
+                feedbackType: "success",
+                title: "Desfecho Adequado: Resgate Eficaz",
+                isFinal: true
+            }
+        };
+
+        // Estado da Aplicação
+        let currentNodeId = 1;
+
+        // Elementos do DOM
+        const scenarioContent = document.getElementById('scenario-content');
+        const analysisContent = document.getElementById('analysis-content');
+        const feedbackBox = document.getElementById('feedback-box');
+        const feedbackText = document.getElementById('feedback-text');
+        const nodeTitle = document.getElementById('node-title');
+        const nodeText = document.getElementById('node-text');
+        const nodeQuestion = document.getElementById('node-question');
+        const questionContainer = document.getElementById('question-container');
+        const optionsContainer = document.getElementById('options-container');
+        const nodeBadge = document.getElementById('node-badge');
+
+        function renderNode(id) {
+            const node = caseData[id];
+            
+            // Atualizar o Badge visualmente
+            nodeBadge.innerText = `Nó ${id}`;
+
+            // Resetar animação
+            scenarioContent.classList.remove('fade-in');
+            void scenarioContent.offsetWidth; // Trigger reflow
+            scenarioContent.classList.add('fade-in');
+
+            // Feedback da decisão anterior (se houver)
+            if (node.feedback) {
+                feedbackText.innerHTML = node.feedback;
+                feedbackBox.classList.remove('hidden', 'bg-red-50', 'border-red-500', 'text-red-800', 'bg-yellow-50', 'border-yellow-500', 'text-yellow-800', 'bg-green-50', 'border-green-500', 'text-green-800');
+                
+                if (node.feedbackType === 'error') {
+                    feedbackBox.classList.add('bg-red-50', 'border-red-500', 'text-red-900');
+                } else if (node.feedbackType === 'warning') {
+                    feedbackBox.classList.add('bg-yellow-50', 'border-yellow-500', 'text-yellow-900');
+                } else {
+                    feedbackBox.classList.add('bg-green-50', 'border-green-500', 'text-green-900');
+                }
+            } else {
+                feedbackBox.classList.add('hidden');
+            }
+
+            // Checar se é o fim do caso
+            if (node.isFinal) {
+                scenarioContent.classList.add('hidden');
+                analysisContent.classList.remove('hidden');
+                
+                // Mostrar o feedback final mesmo na tela de análise, injetando acima
+                if(node.feedback) {
+                    feedbackBox.classList.remove('hidden');
+                    feedbackBox.classList.add('mb-8'); // Espaçamento extra
+                }
+                return;
+            }
+
+            // Preencher Conteúdo
+            nodeTitle.innerText = node.title;
+            nodeText.innerHTML = node.text || '';
+            nodeQuestion.innerText = node.question || '';
+            
+            if (node.question) {
+                questionContainer.classList.remove('hidden');
+            } else {
+                questionContainer.classList.add('hidden');
+            }
+
+            // Renderizar Opções
+            optionsContainer.innerHTML = '';
+            if (node.options) {
+                node.options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = "w-full text-left p-4 rounded-lg border border-gray-200 bg-white hover:bg-blue-50 hover:border-blue-300 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 hover:text-blue-900";
+                    btn.innerHTML = `<span>${opt.text}</span>`;
+                    btn.onclick = () => goToNode(opt.nextNode);
+                    optionsContainer.appendChild(btn);
+                });
+            }
+        }
+
+        function goToNode(id) {
+            currentNodeId = id;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            renderNode(id);
+        }
+
+        function restartCase() {
+            currentNodeId = 1;
+            analysisContent.classList.add('hidden');
+            scenarioContent.classList.remove('hidden');
+            feedbackBox.classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            renderNode(1);
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            renderNode(1);
+        });
+
+    </script>
+</body>
+</html>
