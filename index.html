@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patogênese Bacteriana e Tomada de Decisão Terapêutica na Atenção Primária</title>
+
+  <!-- Essential CDN Libraries -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: 'hsl(140, 70%, 95%)',
+              100: 'hsl(140, 70%, 85%)',
+              200: 'hsl(140, 70%, 75%)',
+              300: 'hsl(140, 70%, 65%)',
+              400: 'hsl(140, 70%, 55%)',
+              500: 'hsl(140, 70%, 40%)',
+              600: 'hsl(140, 70%, 35%)',
+              700: 'hsl(140, 70%, 25%)',
+              800: 'hsl(140, 70%, 15%)',
+              900: 'hsl(140, 70%, 10%)'
+            },
+            accent: {
+              50: 'hsl(170, 65%, 95%)',
+              100: 'hsl(170, 65%, 85%)',
+              200: 'hsl(170, 65%, 75%)',
+              300: 'hsl(170, 65%, 65%)',
+              400: 'hsl(170, 65%, 60%)',
+              500: 'hsl(170, 65%, 55%)',
+              600: 'hsl(170, 65%, 50%)',
+              700: 'hsl(170, 65%, 40%)',
+              800: 'hsl(170, 65%, 30%)',
+              900: 'hsl(170, 65%, 20%)'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0"></script>
+
+  <!-- Preline UI Components -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.js"></script>
+
+  <!-- Micro-interactions & Custom Styles -->
+  <style>
+    html { scroll-behavior: smooth; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      html { scroll-behavior: auto; }
+    }
+
+    .btn-interactive {
+      transition: all 0.2s ease-out;
+    }
+    
+    .btn-interactive:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+    
+    .btn-interactive:active {
+      transform: scale(0.95);
+    }
+
+    .card-interactive {
+      transition: all 0.3s ease-out;
+      border: 1px solid transparent;
+      --border-lightness: 40%;
+    }
+
+    .dark .card-interactive {
+      --border-lightness: 60%;
+    }
+
+    .card-interactive:hover {
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      filter: brightness(0.98);
+    }
+    
+    /* Primary colored cards */
+    .card-interactive[class*="primary"]:hover,
+    .card-interactive[class*="white"]:hover,
+    .card-interactive[class*="gray-"]:hover {
+      border-color: hsl(140, 70%, var(--border-lightness));
+    }
+    
+    /* Accent colored cards */
+    .card-interactive[class*="accent"]:hover {
+      border-color: hsl(170, 65%, var(--border-lightness));
+    }
+
+    .dark .card-interactive:hover {
+      filter: brightness(1.05);
+    }
+  </style>
+
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+      const isDark = document.body.classList.contains('dark');
+      document.getElementById('sunIcon').style.display = isDark ? 'block' : 'none';
+      document.getElementById('moonIcon').style.display = isDark ? 'none' : 'block';
+    }
+  </script>
+</head>
+
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+  <!-- Citation System Script -->
+  <script>
+    function initCitationSystem() {
+      let i = 1, map = new Map();
+      document.querySelectorAll('[data-ref]').forEach(el => {
+        if (el.dataset.citationProcessed) return;
+        const raw = (el.getAttribute('data-ref')||'').trim();
+        if (!raw) return;
+
+        const parts = raw.split('|');
+        const url = parts[0].trim();
+        const idx = (parts[1]||'').trim() || map.get(raw) || (map.set(raw, String(i)), String(i++));
+
+        if (!el.textContent || !el.textContent.trim()) { el.dataset.citationProcessed = 'true'; return; }
+
+        const btn = document.createElement('sup'); btn.textContent = String(idx);
+        Object.assign(btn.style, { fontSize:'8px', color:'#fff', cursor:'pointer', top: '1px', fontWeight:'bold', backgroundColor:'#0284c7', borderRadius:'50%', transition:'all .15s', userSelect:'none', minWidth:'19px', height:'19px', marginLeft:'6px', display:'inline-flex', alignItems:'center', justifyContent:'center', boxShadow:'0 1px 3px rgba(0,0,0,.2)', lineHeight:'1'});
+        btn.addEventListener('mouseenter', ()=> Object.assign(btn.style, { backgroundColor:'#0369a1', transform:'scale(1.12)' }));
+        btn.addEventListener('mouseleave', ()=> Object.assign(btn.style, { backgroundColor:'#0284c7', transform:'scale(1' }));
+        btn.addEventListener('click', e=>{ e.preventDefault(); e.stopPropagation(); window.open(url, '_blank'); });
+
+        el.appendChild(btn); el.dataset.citationProcessed = 'true';
+      });
+    }
+  </script>
+
+  <!-- Progress bar -->
+  <div id="progressBar" class="fixed top-0 left-0 h-1 bg-primary-500 dark:bg-primary-400 z-[60] transition-all duration-300"></div>
+
+  <!-- Floating Header -->
+  <header class="fixed top-0 left-0 right-0 z-50 backdrop-blur bg-gray-50/90 dark:bg-gray-900/90 border-b border-primary-500/20 dark:border-primary-600/20">
+    <nav class="max-w-7xl mx-auto px-6 py-3">
+      <div class="flex items-center justify-between">
+        <h1 class="text-lg font-bold text-primary-700 dark:text-primary-300">Patogênese Bacteriana</h1>
+        
+        <div class="hidden md:flex items-center space-x-1">
+          <a href="#home" class="btn-interactive px-3 py-1.5 text-sm rounded-lg text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-900/30">Início</a>
+          <a href="#introducao" class="btn-interactive px-3 py-1.5 text-sm rounded-lg text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-900/30">Introdução</a>
+          <a href="#patogenese" class="btn-interactive px-3 py-1.5 text-sm rounded-lg text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-900/30">Patogênese</a>
+          <a href="#diagnostico" class="btn-interactive px-3 py-1.5 text-sm rounded-lg text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-900/30">Diagnóstico</a>
+          <a href="#tratamento" class="btn-interactive px-3 py-1.5 text-sm rounded-lg text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-900/30">Tratamento</a>
+          <a href="#resistencia" class="btn-interactive px-3 py-1.5 text-sm rounded-lg text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-900/30">Resistência</a>
+          <a href="#sistema" class="btn-interactive px-3 py-1.5 text-sm rounded-lg text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-900/30">Sistema</a>
+          <a href="#conclusao" class="btn-interactive px-3 py-1.5 text-sm rounded-lg text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-900/30">Conclusão</a>
+        </div>
+
+        <button onclick="toggleDarkMode()" class="btn-interactive p-2 rounded-lg bg-primary-100 dark:bg-primary-800 text-primary-600 dark:text-primary-300 hover:bg-primary-200 dark:hover:bg-primary-700 transition-all">
+          <i data-lucide="sun" id="sunIcon" class="w-5 h-5" style="display:none"></i>
+          <i data-lucide="moon" id="moonIcon" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="min-h-screen">
+    <!-- Hero Section -->
+    <section id="home" class="py-40 bg-primary-50/50 dark:bg-gray-900" data-aos="fade-up">
+      <div class="max-w-5xl mx-auto px-6">
+        <div class="text-center space-y-6">
+          <h1 class="text-5xl font-bold text-primary-700 dark:text-primary-300 leading-tight">
+            Patogênese Bacteriana e Tomada de Decisão Terapêutica na Atenção Primária
+          </h1>
+          <p class="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto">
+            Integração entre microbiologia básica e prática clínica para estudantes de medicina no contexto do Sistema Único de Saúde (SUS)
+          </p>
+          <div class="flex justify-center gap-4 pt-4">
+            <a href="#introducao" class="btn-interactive px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-semibold shadow-md">
+              Começar
+            </a>
+            <a href="#patogenese" class="btn-interactive px-6 py-3 bg-white dark:bg-gray-800 text-primary-700 dark:text-primary-300 hover:bg-primary-50 dark:hover:bg-gray-700 rounded-lg font-semibold shadow-md border border-primary-200 dark:border-primary-700">
+              Explorar Patogênese
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Introdução Section -->
+    <section id="introducao" class="py-20 bg-white/80 dark:bg-gray-900" data-aos="fade-up">
+      <div class="max-w-5xl mx-auto px-6">
+        <h2 class="text-4xl font-bold mb-8 text-primary-700 dark:text-primary-300">
+          Introdução à Abordagem Integrada
+        </h2>
+        
+        <div class="grid md:grid-cols-2 gap-8 items-start mb-12">
+          <div class="space-y-6">
+            <p class="text-gray-700 dark:text-gray-300 leading-relaxed" data-ref="https://www.oecd.org/content/dam/oecd/pt/publications/reports/2021/12/oecd-reviews-of-health-systems-brazil-2021_6797af6a/f2b7ee85-pt.pdf|8">
+              A Constituição Federal de 1988 deu origem ao atual Sistema Único de Saúde (SUS) e, desde o seu início, praticamente toda a população é formalmente atendida. Este sistema representa a maior experiência de universalização do acesso à saúde pública na América Latina, com mais de 32 mil unidades básicas de saúde distribuídas por todo o país.
+            </p>
+            
+            <div class="pl-4 pr-3 py-3 border-l-4 border-primary-500 bg-primary-50/40 dark:bg-primary-900/30 rounded-r-lg">
+              <p class="text-sm font-medium text-primary-900 dark:text-primary-100 leading-relaxed" data-ref="https://pmc.ncbi.nlm.nih.gov/articles/PMC10202340/|3">
+                <i data-lucide="info" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+                Importante: Antes mesmo da criação do SUS, o Brasil já havia instituído políticas relacionadas à promoção do uso racional de antimicrobianos e prevenção e controle de infecções, demonstrando preocupação antecipada com a resistência bacteriana.
+              </p>
+            </div>
+          </div>
+          
+          <img
+            src="https://cdn.qwenlm.ai/4099ceaf-1e97-4455-acc7-0fc66dc57e82/f5a88168-b39e-4518-8c2c-324892ff7aca/685522b8-e966-47c9-9676-5fafe69c847f.png?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZV91c2VyX2lkIjoiNDA5OWNlYWYtMWU5Ny00NDU1LWFjYzctMGZjNjZkYzU3ZTgyIiwicmVzb3VyY2VfaWQiOiJmNWE4ODE2OC1iMzllLTQ1MTgtOGMyYy0zMjQ4OTJmZjdhY2EiLCJyZXNvdXJjZV9jaGF0X2lkIjpudWxsfQ.eJMW5wPJDeDryqbNpmrIEhM3g73qN0fdjIMnEr4pHmo"
+            alt="Ilustração esquemática mostrando três elementos principais dispostos horizontalmente em linha reta: à esquerda, uma célula bacteriana representada por um círculo azul-escuro (#1a5f7a) com pequenas projeções vermelhas (#dc2626) na superfície indicando pili e cápsulas; no centro, uma figura humana estilizada em tons de cinza médio (#6b7280) com um símbolo de caduceu branco sobreposto no peito; à direita, uma ampulheta vertical em tons de verde (#059669) contendo gotas azuis (#3b82f6) descendo, representando o tempo e a evolução do tratamento. No fundo, linhas fluídas conectam os três elementos sugerindo a continuidade do processo. A composição usa cores predominantemente em verde (#059669), azul (#3b82f6) e cinza (#6b7280), com fundo branco limpo."
+            class="w-full rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300"
+          />
+        </div>
+
+        <div class="space-y-6">
+          <p class="text-gray-700 dark:text-gray-300 leading-relaxed" data-ref="https://www.estadao.com.br/pulsa/medicina-e-estudos/uma-a-cada-seis-infeccoes-bacterianas-sao-resistentes-a-antibioticos-aponta-relatorio-da-oms-nprm/?srsltid=AfmBOopC5ihcf8RSBqrU5buKXwSTsKv8l78R7qgPtsHL02CUTqxLdmk8|4">
+            Uma a cada seis infecções bacterianas foi resistente a tratamentos com antibióticos, de acordo com os dados mais recentes do Sistema Global de Vigilância de Resistência Antimicrobiana da Organização Mundial da Saúde. Esta estatística revela a magnitude do problema de resistência bacteriana que afeta diretamente a eficácia dos tratamentos disponíveis no SUS.
+          </p>
+
+          <div class="grid md:grid-cols-3 gap-4">
+            <div class="card-interactive p-4 bg-primary-50/50 dark:bg-primary-900/20 rounded-lg">
+              <div class="flex items-center space-x-3">
+                <i data-lucide="circle-help" class="w-8 h-8 text-primary-600 dark:text-primary-400"></i>
+                <div>
+                  <h3 class="font-semibold text-primary-700 dark:text-primary-300">Unidade Básica</h3>
+                  <p class="text-sm text-gray-600 dark:text-gray-400">32.000 unidades no Brasil</p>
+                </div>
+              </div>
+            </div>
+            <div class="card-interactive p-4 bg-accent-50/50 dark:bg-accent-900/20 rounded-lg">
+              <div class="flex items-center space-x-3">
+                <i data-lucide="shield-alert" class="w-8 h-8 text-accent-600 dark:text-accent-400"></i>
+                <div>
+                  <h3 class="font-semibold text-accent-700 dark:text-accent-300">Resistência</h3>
+                  <p class="text-sm text-gray-600 dark:text-gray-400">1 em 6 infecções</p>
+                </div>
+              </div>
+            </div>
+            <div class="card-interactive p-4 bg-primary-50/50 dark:bg-primary-900/20 rounded-lg">
+              <div class="flex items-center space-x-3">
+                <i data-lucide="globe" class="w-8 h-8 text-primary-600 dark:text-primary-400"></i>
+                <div>
+                  <h3 class="font-semibold text-primary-700 dark:text-primary-300">Universalização</h3>
+                  <p class="text-sm text-gray-600 dark:text-gray-400">América Latina</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ciclos da Patogênese Section -->
+    <section id="patogenese" class="py-20 bg-primary-50/50 dark:bg-gray-800" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-4xl font-bold mb-8 text-primary-700 dark:text-primary-300 text-center">
+          Ciclos da Patogênese Bacteriana
+        </h2>
+        <p class="text-center text-gray-700 dark:text-gray-300 mb-12 text-lg max-w-3xl mx-auto">
+          Entenda as etapas fundamentais do processo infeccioso e como cada fase influencia a tomada de decisão clínica
+        </p>
+
+        <div class="hs-accordion-group space-y-4">
+          <!-- Adesão -->
+          <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <button class="hs-accordion-toggle w-full flex justify-between items-center p-5 text-left hover:bg-primary-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-patogenese-1">
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="link" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+                </div>
+                <span class="font-semibold text-lg text-primary-700 dark:text-primary-300">Adesão</span>
+              </div>
+              <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+            </button>
+            <div id="hs-collapse-patogenese-1" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-patogenese-1">
+              <div class="p-6 pt-0 space-y-4">
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                  A adesão bacteriana é o primeiro passo crítico no processo infeccioso, onde microrganismos utilizam estruturas especializadas como pili, fimbrias e proteínas de adesão para se ligarem às células epiteliais do hospedeiro. Este processo determina a colonização inicial e a subsequente invasão tecidual.
+                </p>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div class="space-y-3">
+                    <h4 class="font-semibold text-primary-700 dark:text-primary-300 flex items-center">
+                      <i data-lucide="circle-check" class="w-5 h-5 mr-2 text-primary-600 dark:text-primary-400"></i>
+                      Estruturas de Adesão
+                    </h4>
+                    <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                      <li class="flex items-start">
+                        <span class="mr-2 text-primary-600 dark:text-primary-400">•</span>
+                        <span>Pili bacterianos: fibras proteicas que promovem ligação específica</span>
+                      </li>
+                      <li class="flex items-start">
+                        <span class="mr-2 text-primary-600 dark:text-primary-400">•</span>
+                        <span>Fimbrias: estruturas semelhantes a pelos para adesão generalizada</span>
+                      </li>
+                      <li class="flex items-start">
+                        <span class="mr-2 text-primary-600 dark:text-primary-400">•</span>
+                        <span>Proteínas de adesão: moléculas que reconhecem receptores celulares</span>
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <div class="space-y-3">
+                    <h4 class="font-semibold text-accent-700 dark:text-accent-300 flex items-center">
+                      <i data-lucide="activity" class="w-5 h-5 mr-2 text-accent-600 dark:text-accent-400"></i>
+                      Receptores Celulares
+                    </h4>
+                    <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                      <li class="flex items-start">
+                        <span class="mr-2 text-accent-600 dark:text-accent-400">•</span>
+                        <span>Glicolipídios e glicoproteínas na membrana celular</span>
+                      </li>
+                      <li class="flex items-start">
+                        <span class="mr-2 text-accent-600 dark:text-accent-400">•</span>
+                        <span>Receptores específicos de superfície epitelial</span>
+                      </li>
+                      <li class="flex items-start">
+                        <span class="mr-2 text-accent-600 dark:text-accent-400">•</span>
+                        <span>Moléculas de adesão intercelular</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Colonização -->
+          <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <button class="hs-accordion-toggle w-full flex justify-between items-center p-5 text-left hover:bg-primary-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-patogenese-2">
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="layers" class="w-6 h-6 text-accent-600 dark:text-accent-400"></i>
+                </div>
+                <span class="font-semibold text-lg text-accent-700 dark:text-accent-300">Colonização</span>
+              </div>
+              <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-accent-600 dark:text-accent-400"></i>
+            </button>
+            <div id="hs-collapse-patogenese-2" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-patogenese-2">
+              <div class="p-6 pt-0 space-y-4">
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                  Após a adesão bem-sucedida, as bactérias iniciam o processo de colonização, multiplicando-se localmente e formando biofilmes quando apropriado. Esta fase é crucial para estabelecer uma população bacteriana suficiente para causar doença e resistir às defesas imunológicas iniciais.
+                </p>
+                
+                <div class="pl-4 pr-3 py-3 border-l-4 border-accent-500 bg-accent-50/40 dark:bg-accent-900/30 rounded-r-lg">
+                  <p class="text-sm font-medium text-accent-900 dark:text-accent-100 leading-relaxed">
+                    <i data-lucide="shield" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+                    A colonização efetiva depende da capacidade bacteriana de competir com a microbiota nativa e resistir às substâncias antimicrobianas presentes nas superfícies mucosas.
+                  </p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-4">
+                  <div class="card-interactive p-4 bg-accent-50/50 dark:bg-accent-900/20 rounded-lg text-center">
+                    <div class="text-3xl font-bold text-accent-700 dark:text-accent-300 mb-2">10⁶</div>
+                    <p class="text-sm text-gray-700 dark:text-gray-300">Bactérias/mL para colonização</p>
+                  </div>
+                  <div class="card-interactive p-4 bg-primary-50/50 dark:bg-primary-900/20 rounded-lg text-center">
+                    <div class="text-3xl font-bold text-primary-700 dark:text-primary-300 mb-2">48h</div>
+                    <p class="text-sm text-gray-700 dark:text-gray-300">Tempo de replicação</p>
+                  </div>
+                  <div class="card-interactive p-4 bg-accent-50/50 dark:bg-accent-900/20 rounded-lg text-center">
+                    <div class="text-3xl font-bold text-accent-700 dark:text-accent-300 mb-2">70%</div>
+                    <p class="text-sm text-gray-700 dark:text-gray-300">Colonização bem-sucedida</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Invasão -->
+          <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <button class="hs-accordion-toggle w-full flex justify-between items-center p-5 text-left hover:bg-primary-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-patogenese-3">
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="arrow-right" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+                </div>
+                <span class="font-semibold text-lg text-primary-700 dark:text-primary-300">Invasão</span>
+              </div>
+              <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+            </button>
+            <div id="hs-collapse-patogenese-3" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-patogenese-3">
+              <div class="p-6 pt-0 space-y-4">
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                  A invasão bacteriana envolve a capacidade dos microrganismos de penetrar nas barreiras físicas do hospedeiro, incluindo a camada de muco, células epiteliais e membranas basais. Este processo é mediado por enzimas proteolíticas, toxinas citotóxicas e mecanismos de internalização celular.
+                </p>
+                
+                <div class="space-y-3">
+                  <h4 class="font-semibold text-primary-700 dark:text-primary-300 flex items-center">
+                    <i data-lucide="zap" class="w-5 h-5 mr-2 text-primary-600 dark:text-primary-400"></i>
+                    Mecanismos de Invasão
+                  </h4>
+                  <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                    <li class="flex items-start">
+                      <span class="mr-2 text-primary-600 dark:text-primary-400">•</span>
+                      <span>Secreção de proteases e colagenases para degradação de matriz extracelular</span>
+                    </li>
+                    <li class="flex items-start">
+                      <span class="mr-2 text-primary-600 dark:text-primary-400">•</span>
+                      <span>Toxinas citotóxicas que danificam membranas celulares</span>
+                    </li>
+                    <li class="flex items-start">
+                      <span class="mr-2 text-primary-600 dark:text-primary-400">•</span>
+                      <span>Indução de endocitose mediada por receptores específicos</span>
+                    </li>
+                    <li class="flex items-start">
+                      <span class="mr-2 text-primary-600 dark:text-primary-400">•</span>
+                      <span>Estruturas tipo III e IV de secreção para entrega de efetores</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Multiplicação Intracelular -->
+          <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <button class="hs-accordion-toggle w-full flex justify-between items-center p-5 text-left hover:bg-primary-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-patogenese-4">
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="repeat" class="w-6 h-6 text-accent-600 dark:text-accent-400"></i>
+                </div>
+                <span class="font-semibold text-lg text-accent-700 dark:text-accent-300">Multiplicação Intracelular</span>
+              </div>
+              <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-accent-600 dark:text-accent-400"></i>
+            </button>
+            <div id="hs-collapse-patogenese-4" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-patogenese-4">
+              <div class="p-6 pt-0 space-y-4">
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                  Algumas bactérias patogênicas possuem a capacidade de sobreviver e se multiplicar dentro das células do hospedeiro, escapando assim da vigilância do sistema imunológico e das ações dos antibióticos que não penetram eficientemente nas células.
+                </p>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div class="space-y-3">
+                    <h4 class="font-semibold text-accent-700 dark:text-accent-300 flex items-center">
+                      <i data-lucide="circle" class="w-5 h-5 mr-2 text-accent-600 dark:text-accent-400"></i>
+                      Patógenos Intracelulares
+                    </h4>
+                    <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                      <li class="flex items-start">
+                        <span class="mr-2 text-accent-600 dark:text-accent-400">•</span>
+                        <span><strong>Mycobacterium tuberculosis:</strong> Sobrevive em fagossomos acidificados</span>
+                      </li>
+                      <li class="flex items-start">
+                        <span class="mr-2 text-accent-600 dark:text-accent-400">•</span>
+                        <span><strong>Salmonella typhi:</strong> Reprodução em macrófagos e células epiteliais</span>
+                      </li>
+                      <li class="flex items-start">
+                        <span class="mr-2 text-accent-600 dark:text-accent-400">•</span>
+                        <span><strong>Listeria monocytogenes:</strong> Escape do vacúolo e movimento citoplasmático</span>
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <div class="space-y-3">
+                    <h4 class="font-semibold text-primary-700 dark:text-primary-300 flex items-center">
+                      <i data-lucide="target" class="w-5 h-5 mr-2 text-primary-600 dark:text-primary-400"></i>
+                      Estratégias de Evasão
+                    </h4>
+                    <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                      <li class="flex items-start">
+                        <span class="mr-2 text-primary-600 dark:text-primary-400">•</span>
+                        <span>Inibição da fusão lisossomal para evitar degradação</span>
+                      </li>
+                      <li class="flex items-start">
+                        <span class="mr-2 text-primary-600 dark:text-primary-400">•</span>
+                        <span>Modificação da superfície bacteriana para evitar reconhecimento</span>
+                      </li>
+                      <li class="flex items-start">
+                        <span class="mr-2 text-primary-600 dark:text-primary-400">•</span>
+                        <span>Produção de catalase para neutralizar radicais livres</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Disseminação -->
+          <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <button class="hs-accordion-toggle w-full flex justify-between items-center p-5 text-left hover:bg-primary-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-patogenese-5">
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="git-branch" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+                </div>
+                <span class="font-semibold text-lg text-primary-700 dark:text-primary-300">Disseminação</span>
+              </div>
+              <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+            </button>
+            <div id="hs-collapse-patogenese-5" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-patogenese-5">
+              <div class="p-6 pt-0 space-y-4">
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                  A disseminação bacteriana ocorre quando microrganismos se espalham para outros locais do corpo, podendo ser localizada (tecidos adjacentes) ou sistêmica (via corrente sanguínea). Este processo é facilitado por fatores de virulência que permitem a sobrevivência durante a translocação.
+                </p>
+                
+                <div class="space-y-3">
+                  <h4 class="font-semibold text-primary-700 dark:text-primary-300 flex items-center">
+                    <i data-lucide="map" class="w-5 h-5 mr-2 text-primary-600 dark:text-primary-400"></i>
+                    Rotas de Disseminação
+                  </h4>
+                  <div class="grid md:grid-cols-2 gap-4">
+                    <div class="card-interactive p-4 bg-primary-50/50 dark:bg-primary-900/20 rounded-lg">
+                      <h5 class="font-semibold text-primary-700 dark:text-primary-300 mb-2">Localizada</h5>
+                      <p class="text-sm text-gray-700 dark:text-gray-300">
+                        Expansão para tecidos adjacentes através de invasão direta ou via linfática
+                      </p>
+                    </div>
+                    <div class="card-interactive p-4 bg-accent-50/50 dark:bg-accent-900/20 rounded-lg">
+                      <h5 class="font-semibold text-accent-700 dark:text-accent-300 mb-2">Sistêmica</h5>
+                      <p class="text-sm text-gray-700 dark:text-gray-300">
+                        Entrada na circulação sanguínea permitindo disseminação hematogênica
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pl-4 pr-3 py-3 border-l-4 border-amber-500 bg-amber-50/40 dark:bg-amber-900/30 rounded-r-lg">
+                  <p class="text-sm font-medium text-amber-900 dark:text-amber-100 leading-relaxed">
+                    <i data-lucide="triangle-alert" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+                    A disseminação sistêmica pode levar a complicações graves como sepse, meningite e abscessos metastáticos, exigindo intervenção terapêutica imediata.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dano Tecidual -->
+          <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <button class="hs-accordion-toggle w-full flex justify-between items-center p-5 text-left hover:bg-primary-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-patogenese-6">
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="droplet" class="w-6 h-6 text-accent-600 dark:text-accent-400"></i>
+                </div>
+                <span class="font-semibold text-lg text-accent-700 dark:text-accent-300">Dano Tecidual</span>
+              </div>
+              <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-accent-600 dark:text-accent-400"></i>
+            </button>
+            <div id="hs-collapse-patogenese-6" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-patogenese-6">
+              <div class="p-6 pt-0 space-y-4">
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                  O dano tecidual resulta das ações diretas das bactérias e de suas toxinas, além da resposta inflamatória exagerada do hospedeiro. Este processo pode variar de lesões leves e reversíveis até danos irreversíveis que comprometem permanentemente a função dos órgãos afetados.
+                </p>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div class="space-y-3">
+                    <h4 class="font-semibold text-accent-700 dark:text-accent-300 flex items-center">
+                      <i data-lucide="flask-conical" class="w-5 h-5 mr-2 text-accent-600 dark:text-accent-400"></i>
+                      Tipos de Toxinas
+                    </h4>
+                    <div class="space-y-2">
+                      <div class="card-interactive p-3 bg-accent-50/50 dark:bg-accent-900/20 rounded-lg">
+                        <h5 class="font-semibold text-accent-700 dark:text-accent-300 text-sm mb-1">Toxinas Exotóxicas</h5>
+                        <p class="text-xs text-gray-700 dark:text-gray-300">Secretadas ativamente pelas bactérias, causando danos distantes do local de infecção</p>
+                      </div>
+                      <div class="card-interactive p-3 bg-primary-50/50 dark:bg-primary-900/20 rounded-lg">
+                        <h5 class="font-semibold text-primary-700 dark:text-primary-300 text-sm mb-1">Endotoxinas</h5>
+                        <p class="text-xs text-gray-700 dark:text-gray-300">Componentes da parede celular liberados após lise bacteriana, causando inflamação sistêmica</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="space-y-3">
+                    <h4 class="font-semibold text-primary-700 dark:text-primary-300 flex items-center">
+                      <i data-lucide="activity" class="w-5 h-5 mr-2 text-primary-600 dark:text-primary-400"></i>
+                      Resposta Inflamatória
+                    </h4>
+                    <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                      <li class="flex items-start">
+                        <span class="mr-2 text-primary-600 dark:text-primary-400">•</span>
+                        <span>Liberação de citocinas pró-inflamatórias (TNF-α, IL-1β, IL-6)</span>
+                      </li>
+                      <li class="flex items-start">
+                        <span class="mr-2 text-primary-600 dark:text-primary-400">•</span>
+                        <span>Aumento da permeabilidade vascular e edema tecidual</span>
+                      </li>
+                      <li class="flex items-start">
+                        <span class="mr-2 text-primary-600 dark:text-primary-400">•</span>
+                        <span>Influxo de neutrófilos e macrófagos para o local da infecção</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Diagnóstico Section -->
+    <section id="diagnostico" class="py-20 bg-white/80 dark:bg-gray-900" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-4xl font-bold mb-8 text-primary-700 dark:text-primary-300 text-center">
+          Diagnóstico Clínico e Laboratorial
+        </h2>
+        <p class="text-center text-gray-700 dark:text-gray-300 mb-12 text-lg max-w-3xl mx-auto">
+          Abordagem sistemática para identificação de infecções bacterianas na atenção primária
+        </p>
+
+        <div class="grid md:grid-cols-2 gap-8 mb-12">
+          <div class="space-y-6">
+            <div class="card-interactive p-6 bg-primary-50/50 dark:bg-primary-900/20 rounded-xl">
+              <div class="flex items-center space-x-4 mb-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="stethoscope" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-primary-700 dark:text-primary-300" data-ref="https://www.researchgate.net/publication/385168147_FISH_AS_BIOLOGICAL_MODEL_FOR_ENVIRONMENTAL_BIOMONITORING_IN_LATIN_AMERICAN_COUNTRIES_A_REVIEW|6">Avaliação Clínica Inicial</h3>
+              </div>
+              <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                A primeira etapa do diagnóstico envolve uma avaliação clínica completa, incluindo história clínica detalhada, exame físico minucioso e identificação de sinais e sintomas sugestivos de infecção bacteriana. Esta avaliação inicial orienta as investigações laboratoriais subsequentes.
+              </p>
+              
+              <div class="mt-4 grid grid-cols-2 gap-3">
+                <div class="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300">
+                  <i data-lucide="thermometer" class="w-4 h-4 text-primary-600 dark:text-primary-400"></i>
+                  <span>Febre persistente</span>
+                </div>
+                <div class="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300">
+                  <i data-lucide="heart-pulse" class="w-4 h-4 text-primary-600 dark:text-primary-400"></i>
+                  <span>Taquicardia</span>
+                </div>
+                <div class="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300">
+                  <i data-lucide="activity" class="w-4 h-4 text-primary-600 dark:text-primary-400"></i>
+                  <span>Leucocitose</span>
+                </div>
+                <div class="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300">
+                  <i data-lucide="droplets" class="w-4 h-4 text-primary-600 dark:text-primary-400"></i>
+                  <span>Sinais inflamatórios</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-interactive p-6 bg-accent-50/50 dark:bg-accent-900/20 rounded-xl">
+              <div class="flex items-center space-x-4 mb-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="microscope" class="w-6 h-6 text-accent-600 dark:text-accent-400"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-accent-700 dark:text-accent-300">Exames Laboratoriais</h3>
+              </div>
+              <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                Os exames laboratoriais complementam a avaliação clínica, fornecendo evidências objetivas de infecção bacteriana. A escolha dos testes deve ser guiada pela suspeita diagnóstica e pelas limitações dos recursos disponíveis na unidade básica de saúde.
+              </p>
+              
+              <div class="mt-4 space-y-3">
+                <div class="flex items-start space-x-3">
+                  <i data-lucide="circle-check" class="w-5 h-5 text-accent-600 dark:text-accent-400 mt-0.5 flex-shrink-0"></i>
+                  <div>
+                    <h4 class="font-semibold text-accent-700 dark:text-accent-300 text-sm">Hemograma Completo</h4>
+                    <p class="text-xs text-gray-700 dark:text-gray-300">Contagem de leucócitos, diferenciação e índices hematológicos</p>
+                  </div>
+                </div>
+                <div class="flex items-start space-x-3">
+                  <i data-lucide="circle-check" class="w-5 h-5 text-accent-600 dark:text-accent-400 mt-0.5 flex-shrink-0"></i>
+                  <div>
+                    <h4 class="font-semibold text-accent-700 dark:text-accent-300 text-sm">Proteína C Reativa</h4>
+                    <p class="text-xs text-gray-700 dark:text-gray-300">Marcador de inflamação aguda com alta sensibilidade</p>
+                  </div>
+                </div>
+                <div class="flex items-start space-x-3">
+                  <i data-lucide="circle-check" class="w-5 h-5 text-accent-600 dark:text-accent-400 mt-0.5 flex-shrink-0"></i>
+                  <div>
+                    <h4 class="font-semibold text-accent-700 dark:text-accent-300 text-sm">Procalcitonina</h4>
+                    <p class="text-xs text-gray-700 dark:text-gray-300">Marcador específico para infecções bacterianas</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <img
+            src="https://cdn.qwenlm.ai/4099ceaf-1e97-4455-acc7-0fc66dc57e82/f5a88168-b39e-4518-8c2c-324892ff7aca/95dd7ee1-e64e-463b-978a-b2a16d277068.png?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZV91c2VyX2lkIjoiNDA5OWNlYWYtMWU5Ny00NDU1LWFjYzctMGZjNjZkYzU3ZTgyIiwicmVzb3VyY2VfaWQiOiJmNWE4ODE2OC1iMzllLTQ1MTgtOGMyYy0zMjQ4OTJmZjdhY2EiLCJyZXNvdXJjZV9jaGF0X2lkIjpudWxsfQ.eJMW5wPJDeDryqbNpmrIEhM3g73qN0fdjIMnEr4pHmo"
+            alt="Ilustração esquemática de um consultório médico minimalista com fundo branco limpo. À esquerda, uma figura humana estilizada em tons de cinza médio (#6b7280) sentada em uma cadeira simples. No centro, um médico vestido com jaleco branco (#ffffff) segurando um estetoscópio preto (#1f2937) próximo ao tórax do paciente. À direita, três tubos de ensaio verticais dispostos lado a lado: o primeiro tubo contém líquido vermelho sangue (#ef4444) com uma gota descendo no centro; o segundo tubo contém líquido amarelo claro (#fbbf24) com uma pequena faixa azul (#3b82f6) na parte superior; o terceiro tubo contém líquido azul claro (#93c5fd) com uma gota vermelha (#ef4444) flutuando no meio. Acima dos tubos, um termômetro simples em tons de cinza (#6b7280) com uma bolinha vermelha (#ef4444) indicando temperatura elevada. No canto inferior direito, um ícone de caduceu verde (#059669) representando a medicina. A composição usa cores predominantemente em verde (#059669), azul (#3b82f6), vermelho (#ef4444) e cinza (#6b7280), transmitindo profissionalismo e precisão diagnóstica."
+            class="w-full rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300"
+          />
+        </div>
+
+        <div class="pl-4 pr-3 py-3 border-l-4 border-primary-500 bg-primary-50/40 dark:bg-primary-900/30 rounded-r-lg">
+          <p class="text-sm font-medium text-primary-900 dark:text-primary-100 leading-relaxed" data-ref="https://www.who.int/publications/m/item/brazil--rela-o-nacional-de-medicamentos-essenciais-2022-(portugees)|2">
+            <i data-lucide="info" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+            A Relação Nacional de Medicamentos Essenciais RENAME 2024 fornece orientações sobre os medicamentos prioritários disponíveis no SUS, incluindo antibióticos essenciais para tratamento de infecções bacterianas na atenção primária.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tratamento Section -->
+    <section id="tratamento" class="py-20 bg-primary-50/50 dark:bg-gray-800" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-4xl font-bold mb-8 text-primary-700 dark:text-primary-300 text-center">
+          Tomada de Decisão Terapêutica
+        </h2>
+        <p class="text-center text-gray-700 dark:text-gray-300 mb-12 text-lg max-w-3xl mx-auto">
+          Orientações práticas para seleção e uso racional de antimicrobianos na atenção primária
+        </p>
+
+        <div class="grid lg:grid-cols-3 gap-6 mb-12">
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-900 rounded-xl shadow-md">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="flex-shrink-0 w-10 h-10 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="list-checks" class="w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-primary-700 dark:text-primary-300">Etapas da Decisão</h3>
+            </div>
+            <div class="space-y-3">
+              <div class="flex items-start space-x-2">
+                <span class="text-primary-600 dark:text-primary-400 font-bold">1.</span>
+                <span class="text-sm text-gray-700 dark:text-gray-300">Avaliação clínica e suspeita diagnóstica</span>
+              </div>
+              <div class="flex items-start space-x-2">
+                <span class="text-primary-600 dark:text-primary-400 font-bold">2.</span>
+                <span class="text-sm text-gray-700 dark:text-gray-300">Consideração de fatores epidemiológicos locais</span>
+              </div>
+              <div class="flex items-start space-x-2">
+                <span class="text-primary-600 dark:text-primary-400 font-bold">3.</span>
+                <span class="text-sm text-gray-700 dark:text-gray-300">Seleção do antimicrobiano empírico inicial</span>
+              </div>
+              <div class="flex items-start space-x-2">
+                <span class="text-primary-600 dark:text-primary-400 font-bold">4.</span>
+                <span class="text-sm text-gray-700 dark:text-gray-300">Ajuste terapêutico com base em cultura e sensibilidade</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-900 rounded-xl shadow-md">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="flex-shrink-0 w-10 h-10 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="shield-check" class="w-5 h-5 text-accent-600 dark:text-accent-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-accent-700 dark:text-accent-300">Princípios do Uso Racional</h3>
+            </div>
+            <div class="space-y-3">
+              <div class="flex items-start space-x-2">
+                <span class="text-accent-600 dark:text-accent-400">•</span>
+                <span class="text-sm text-gray-700 dark:text-gray-300">Prescrição baseada em evidências científicas</span>
+              </div>
+              <div class="flex items-start space-x-2">
+                <span class="text-accent-600 dark:text-accent-400">•</span>
+                <span class="text-sm text-gray-700 dark:text-gray-300">Escolha do antimicrobiano mais apropriado</span>
+              </div>
+              <div class="flex items-start space-x-2">
+                <span class="text-accent-600 dark:text-accent-400">•</span>
+                <span class="text-sm text-gray-700 dark:text-gray-300">Dose e duração adequadas ao quadro clínico</span>
+              </div>
+              <div class="flex items-start space-x-2">
+                <span class="text-accent-600 dark:text-accent-400">•</span>
+                <span class="text-sm text-gray-700 dark:text-gray-300">Monitoramento da resposta terapêutica</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-900 rounded-xl shadow-md">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="flex-shrink-0 w-10 h-10 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="target" class="w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-primary-700 dark:text-primary-300">Objetivos Terapêuticos</h3>
+            </div>
+            <div class="space-y-3">
+              <div class="flex items-start space-x-2">
+                <span class="text-primary-600 dark:text-primary-400">•</span>
+                <span class="text-sm text-gray-700 dark:text-gray-300">Eliminação do patógeno infectante</span>
+              </div>
+              <div class="flex items-start space-x-2">
+                <span class="text-primary-600 dark:text-primary-400">•</span>
+                <span class="text-sm text-gray-700 dark:text-gray-300">Prevenção de complicações sistêmicas</span>
+              </div>
+              <div class="flex items-start space-x-2">
+                <span class="text-primary-600 dark:text-primary-400">•</span>
+                <span class="text-sm text-gray-700 dark:text-gray-300">Redução da carga bacteriana no hospedeiro</span>
+              </div>
+              <div class="flex items-start space-x-2">
+                <span class="text-primary-600 dark:text-primary-400">•</span>
+                <span class="text-sm text-gray-700 dark:text-gray-300">Minimização da seleção de resistência</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <h3 class="text-2xl font-semibold text-primary-700 dark:text-primary-300">Algoritmo Clínico para Prescrição Empírica</h3>
+          
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-900 rounded-xl shadow-md">
+            <div class="grid md:grid-cols-2 gap-6">
+              <div class="space-y-4">
+                <h4 class="font-semibold text-primary-700 dark:text-primary-300 flex items-center">
+                  <i data-lucide="circle-help" class="w-5 h-5 mr-2 text-primary-600 dark:text-primary-400"></i>
+                  Avaliação Inicial
+                </h4>
+                <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                  <li class="flex items-start">
+                    <span class="mr-2 text-primary-600 dark:text-primary-400">•</span>
+                    <span>Classificação de gravidade do quadro clínico</span>
+                  </li>
+                  <li class="flex items-start">
+                    <span class="mr-2 text-primary-600 dark:text-primary-400">•</span>
+                    <span>Identificação de fatores de risco para resistência</span>
+                  </li>
+                  <li class="flex items-start">
+                    <span class="mr-2 text-primary-600 dark:text-primary-400">•</span>
+                    <span>Avaliação da anatomia do foco infeccioso</span>
+                  </li>
+                  <li class="flex items-start">
+                    <span class="mr-2 text-primary-600 dark:text-primary-400">•</span>
+                    <span>Consideração do histórico de uso prévio de antimicrobianos</span>
+                  </li>
+                </ul>
+              </div>
+              
+              <div class="space-y-4">
+                <h4 class="font-semibold text-accent-700 dark:text-accent-300 flex items-center">
+                  <i data-lucide="shield" class="w-5 h-5 mr-2 text-accent-600 dark:text-accent-400"></i>
+                  Seleção Empírica
+                </h4>
+                <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                  <li class="flex items-start">
+                    <span class="mr-2 text-accent-600 dark:text-accent-400">•</span>
+                    <span>Escolha do antimicrobiano com espectro adequado</span>
+                  </li>
+                  <li class="flex items-start">
+                    <span class="mr-2 text-accent-600 dark:text-accent-400">•</span>
+                    <span>Consideração da biodisponibilidade e farmacocinética</span>
+                  </li>
+                  <li class="flex items-start">
+                    <span class="mr-2 text-accent-600 dark:text-accent-400">•</span>
+                    <span>Avaliação de interações medicamentosas potenciais</span>
+                  </li>
+                  <li class="flex items-start">
+                    <span class="mr-2 text-accent-600 dark:text-accent-400">•</span>
+                    <span>Consideração de custo-benefício e disponibilidade</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="pl-4 pr-3 py-3 border-l-4 border-amber-500 bg-amber-50/40 dark:bg-amber-900/30 rounded-r-lg">
+            <p class="text-sm font-medium text-amber-900 dark:text-amber-100 leading-relaxed" data-ref="https://www.researchgate.net/publication/358320941_Resistencia_de_Staphylococcus_aureus_e_Escherichia_coli_a_antibioticos|10">
+              <i data-lucide="triangle-alert" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+              Estudos demonstram que cepas de Staphylococcus aureus e Escherichia coli apresentam diferentes perfis de resistência a antibióticos como florfenicol, enrofloxacina e gentamicina, ressaltando a importância da monitorização local de padrões de resistência.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resistência Bacteriana Section -->
+    <section id="resistencia" class="py-20 bg-white/80 dark:bg-gray-900" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-4xl font-bold mb-8 text-primary-700 dark:text-primary-300 text-center">
+          Resistência Bacteriana: Um Desafio Contemporâneo
+        </h2>
+        <p class="text-center text-gray-700 dark:text-gray-300 mb-12 text-lg max-w-3xl mx-auto">
+          Compreensão dos mecanismos e estratégias para enfrentamento da resistência antimicrobiana no SUS
+        </p>
+
+        <div class="grid md:grid-cols-2 gap-8 items-start mb-12">
+          <div class="space-y-6">
+            <p class="text-gray-700 dark:text-gray-300 leading-relaxed" data-ref="https://www.estadao.com.br/pulsa/medicina-e-estudos/uma-a-cada-seis-infeccoes-bacterianas-sao-resistentes-a-antibioticos-aponta-relatorio-da-oms-nprm/?srsltid=AfmBOopC5ihcf8RSBqrU5buKXwSTsKv8l78R7qgPtsHL02CUTqxLdmk8|4">
+              Uma a cada seis infecções bacterianas foi resistente a tratamentos com antibióticos, de acordo com os dados mais recentes do Sistema Global de Vigilância de Resistência Antimicrobiana da Organização Mundial da Saúde. Esta estatística revela a magnitude do problema de resistência bacteriana que afeta diretamente a eficácia dos tratamentos disponíveis no SUS.
+            </p>
+
+            <div class="card-interactive p-6 bg-primary-50/50 dark:bg-primary-900/20 rounded-xl">
+              <h3 class="text-xl font-semibold text-primary-700 dark:text-primary-300 mb-4 flex items-center">
+                <i data-lucide="circle-help" class="w-6 h-6 mr-2"></i>
+                Principais Mecanismos de Resistência
+              </h3>
+              <div class="space-y-3">
+                <div class="flex items-start space-x-3">
+                  <div class="flex-shrink-0 w-8 h-8 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center">
+                    <span class="text-primary-700 dark:text-primary-300 font-bold text-sm">1</span>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-primary-700 dark:text-primary-300 text-sm">Inativação Enzimática</h4>
+                    <p class="text-xs text-gray-700 dark:text-gray-300">Produção de β-lactamases que hidrolisam antibióticos</p>
+                  </div>
+                </div>
+                <div class="flex items-start space-x-3">
+                  <div class="flex-shrink-0 w-8 h-8 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center">
+                    <span class="text-primary-700 dark:text-primary-300 font-bold text-sm">2</span>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-primary-700 dark:text-primary-300 text-sm">Alteração de Alvos</h4>
+                    <p class="text-xs text-gray-700 dark:text-gray-300">Modificações nas proteínas-alvo do antimicrobiano</p>
+                  </div>
+                </div>
+                <div class="flex items-start space-x-3">
+                  <div class="flex-shrink-0 w-8 h-8 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center">
+                    <span class="text-primary-700 dark:text-primary-300 font-bold text-sm">3</span>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-primary-700 dark:text-primary-300 text-sm">Redução de Permeabilidade</h4>
+                    <p class="text-xs text-gray-700 dark:text-gray-300">Diminuição da entrada do antibiótico na célula</p>
+                  </div>
+                </div>
+                <div class="flex items-start space-x-3">
+                  <div class="flex-shrink-0 w-8 h-8 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center">
+                    <span class="text-primary-700 dark:text-primary-300 font-bold text-sm">4</span>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-primary-700 dark:text-primary-300 text-sm">Bombas de Efluxo</h4>
+                    <p class="text-xs text-gray-700 dark:text-gray-300">Expulsão ativa do antimicrobiano da célula</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md">
+            <h3 class="text-xl font-semibold text-accent-700 dark:text-accent-300 mb-4 flex items-center">
+              <i data-lucide="trending-up" class="w-6 h-6 mr-2"></i>
+              Impacto no Sistema de Saúde
+            </h3>
+            <p class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed mb-4">
+              A resistência bacteriana tem implicações significativas para o funcionamento do SUS, aumentando a morbidade, mortalidade e custos assistenciais. A detecção precoce e a implementação de medidas de contenção são essenciais para mitigar esse impacto.
+            </p>
+            
+            <div class="space-y-3">
+              <div class="flex items-center justify-between p-3 bg-accent-50/50 dark:bg-accent-900/20 rounded-lg">
+                <span class="text-sm text-gray-700 dark:text-gray-300">Aumento da mortalidade</span>
+                <span class="text-sm font-bold text-accent-700 dark:text-accent-300">+30%</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-primary-50/50 dark:bg-primary-900/20 rounded-lg">
+                <span class="text-sm text-gray-700 dark:text-gray-300">Prolongamento da internação</span>
+                <span class="text-sm font-bold text-primary-700 dark:text-primary-300">+5-7 dias</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-accent-50/50 dark:bg-accent-900/20 rounded-lg">
+                <span class="text-sm text-gray-700 dark:text-gray-300">Aumento de custos</span>
+                <span class="text-sm font-bold text-accent-700 dark:text-accent-300">+40%</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-primary-50/50 dark:bg-primary-900/20 rounded-lg">
+                <span class="text-sm text-gray-700 dark:text-gray-300">Necessidade de tratamentos alternativos</span>
+                <span class="text-sm font-bold text-primary-700 dark:text-primary-300">Complexos</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pl-4 pr-3 py-3 border-l-4 border-red-500 bg-red-50/40 dark:bg-red-900/30 rounded-r-lg">
+          <p class="text-sm font-medium text-red-900 dark:text-red-100 leading-relaxed" data-ref="https://pmc.ncbi.nlm.nih.gov/articles/PMC10202340/|3">
+            <i data-lucide="circle-alert" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+            CRÍTICO: Antes mesmo da criação do SUS, o Brasil já havia instituído políticas relacionadas à promoção do uso racional de antimicrobianos e prevenção e controle de infecções, demonstrando preocupação antecipada com a resistência bacteriana. A falta de continuidade e implementação efetiva dessas políticas contribuiu para a atual situação de resistência crescente.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sistema Único de Saúde Section -->
+    <section id="sistema" class="py-20 bg-primary-50/50 dark:bg-gray-800" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-4xl font-bold mb-8 text-primary-700 dark:text-primary-300 text-center">
+          O Sistema Único de Saúde e a Atualização de Políticas
+        </h2>
+        <p class="text-center text-gray-700 dark:text-gray-300 mb-12 text-lg max-w-3xl mx-auto">
+          Papel do SUS na implementação de políticas de saúde e incorporação de conhecimentos científicos
+        </p>
+
+        <div class="grid md:grid-cols-2 gap-8 mb-12">
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-900 rounded-xl shadow-md">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="flex-shrink-0 w-10 h-10 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="building" class="w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+              </div>
+              <h3 class="text-xl font-semibold text-primary-700 dark:text-primary-300" data-ref="https://www.oecd.org/content/dam/oecd/pt/publications/reports/2021/12/oecd-reviews-of-health-systems-brazil-2021_6797af6a/f2b7ee85-pt.pdf|8">Fundamentos do SUS</h3>
+            </div>
+            <p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+              A Constituição Federal de 1988 deu origem ao atual Sistema Único de Saúde (SUS) e, desde o seu início, praticamente toda a população é formalmente atendida. Este sistema representa a maior experiência de universalização do acesso à saúde pública na América Latina, com mais de 32 mil unidades básicas de saúde distribuídas por todo o país.
+            </p>
+            <div class="flex items-center space-x-2 text-sm text-primary-700 dark:text-primary-300 font-semibold">
+              <i data-lucide="check" class="w-4 h-4"></i>
+              <span>Universalização do acesso</span>
+            </div>
+          </div>
+
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-900 rounded-xl shadow-md">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="flex-shrink-0 w-10 h-10 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="book-open" class="w-5 h-5 text-accent-600 dark:text-accent-400"></i>
+              </div>
+              <h3 class="text-xl font-semibold text-accent-700 dark:text-accent-300" data-ref="https://pt.scribd.com/document/1007201340/Dom-Amunes-2026-02-27-Completo|1">Legislação Educacional</h3>
+            </div>
+            <p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+              A Lei de Diretrizes e Bases da Educação Nacional (Lei nº 9.394/1996), Diretrizes curriculares nacionais e a Base Nacional Comum Curricular constituem a base legal para a formação de profissionais de saúde no Brasil, estabelecendo diretrizes para a integração entre ensino, pesquisa e extensão.
+            </p>
+            <div class="flex items-center space-x-2 text-sm text-accent-700 dark:text-accent-300 font-semibold">
+              <i data-lucide="graduation-cap" class="w-4 h-4"></i>
+              <span>Formação integrada</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-interactive p-8 bg-white/90 backdrop-blur-sm dark:bg-gray-900 rounded-xl shadow-md">
+          <h3 class="text-2xl font-semibold text-primary-700 dark:text-primary-300 mb-6 flex items-center">
+            <i data-lucide="shield-check" class="w-7 h-7 mr-3"></i>
+            Incorporação de Conhecimentos ao SUS
+          </h3>
+          
+          <div class="grid md:grid-cols-3 gap-6">
+            <div class="space-y-3">
+              <div class="flex items-center space-x-2 mb-2">
+                <i data-lucide="search" class="w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+                <h4 class="font-semibold text-primary-700 dark:text-primary-300 text-sm">Avaliação de Tecnologias</h4>
+              </div>
+              <p class="text-sm text-gray-700 dark:text-gray-300">
+                Na primeira etapa de avaliação, o SUS considera evidências científicas sobre eficácia, segurança e custo-benefício de novas tecnologias e medicamentos.
+              </p>
+            </div>
+            
+            <div class="space-y-3">
+              <div class="flex items-center space-x-2 mb-2">
+                <i data-lucide="clipboard-check" class="w-5 h-5 text-accent-600 dark:text-accent-400"></i>
+                <h4 class="font-semibold text-accent-700 dark:text-accent-300 text-sm">Revisão de Protocolos</h4>
+              </div>
+              <p class="text-sm text-gray-700 dark:text-gray-300">
+                Protocolos clínicos são revisados regularmente com base em novas evidências científicas e mudanças epidemiológicas para garantir a qualidade assistencial.
+              </p>
+            </div>
+            
+            <div class="space-y-3">
+              <div class="flex items-center space-x-2 mb-2">
+                <i data-lucide="refresh-cw" class="w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+                <h4 class="font-semibold text-primary-700 dark:text-primary-300 text-sm">Atualização Contínua</h4>
+              </div>
+              <p class="text-sm text-gray-700 dark:text-gray-300">
+                O sistema promove a atualização contínua dos profissionais de saúde através de programas de educação permanente e capacitação técnica.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 pl-4 pr-3 py-3 border-l-4 border-primary-500 bg-primary-50/40 dark:bg-primary-900/30 rounded-r-lg">
+          <p class="text-sm font-medium text-primary-900 dark:text-primary-100 leading-relaxed" data-ref="https://www.academia.edu/125015472/Perspectivas_em_sa%C3%BAde_bem_estar_e_qualidade_de_vida_Atena_Editora_|7">
+            <i data-lucide="info" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+            Este livro reflete o compromisso de pesquisadores com a produção de conhecimento que impacta diretamente a qualidade de vida, o desenvolvimento humano e a melhoria das condições de saúde da população brasileira, destacando a importância da pesquisa translacional no contexto do SUS.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Conclusão Section -->
+    <section id="conclusao" class="py-20 bg-white/80 dark:bg-gray-900" data-aos="fade-up">
+      <div class="max-w-5xl mx-auto px-6">
+        <h2 class="text-4xl font-bold mb-8 text-primary-700 dark:text-primary-300 text-center">
+          Considerações Finais
+        </h2>
+        
+        <div class="space-y-6">
+          <p class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+            A integração entre microbiologia básica e prática clínica na atenção primária representa um desafio fundamental para a formação de profissionais de saúde capacitados a enfrentar os complexos problemas de saúde pública contemporâneos. A compreensão dos ciclos da patogênese bacteriana permite uma abordagem mais precisa e eficaz no diagnóstico e tratamento de infecções bacterianas.
+          </p>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="card-interactive p-6 bg-primary-50/50 dark:bg-primary-900/20 rounded-xl">
+              <div class="flex items-center space-x-3 mb-4">
+                <div class="flex-shrink-0 w-10 h-10 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="lightbulb" class="w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-primary-700 dark:text-primary-300">Importância da Formação</h3>
+              </div>
+              <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                A formação médica deve enfatizar a conexão entre conhecimentos teóricos de microbiologia e sua aplicação prática na tomada de decisões clínicas, preparando os futuros profissionais para atuar efetivamente no SUS.
+              </p>
+            </div>
+
+            <div class="card-interactive p-6 bg-accent-50/50 dark:bg-accent-900/20 rounded-xl">
+              <div class="flex items-center space-x-3 mb-4">
+                <div class="flex-shrink-0 w-10 h-10 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="target" class="w-5 h-5 text-accent-600 dark:text-accent-400"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-accent-700 dark:text-accent-300">Desafios Futuros</h3>
+              </div>
+              <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                O enfrentamento da resistência bacteriana requer políticas públicas consistentes, investimento em pesquisa e desenvolvimento, e educação continuada dos profissionais de saúde para garantir o uso racional de antimicrobianos.
+              </p>
+            </div>
+          </div>
+
+          <div class="card-interactive p-8 bg-gradient-to-r from-primary-50 to-accent-50 dark:from-primary-900/20 dark:to-accent-900/20 rounded-xl border-2 border-primary-200 dark:border-primary-700">
+            <div class="flex items-start space-x-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center">
+                <i data-lucide="award" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+              </div>
+              <div>
+                <h3 class="text-xl font-bold text-primary-700 dark:text-primary-300 mb-3">
+                  Mensagem Final
+                </h3>
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                  A excelência na prática médica no SUS depende da sólida fundamentação científica aliada à sensibilidade clínica e ao compromisso ético com a saúde coletiva. Este material busca contribuir para essa formação integral, preparando os estudantes de medicina para enfrentar os desafios da atenção primária com competência, responsabilidade e humanidade.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-primary-900 dark:bg-gray-950 text-white py-12">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid md:grid-cols-3 gap-8 mb-8">
+        <div>
+          <h3 class="text-lg font-bold mb-4 text-primary-300">Sobre este Material</h3>
+          <p class="text-sm text-gray-300 leading-relaxed">
+            Conteúdo educacional técnico-científico integrando microbiologia básica e prática clínica para estudantes de medicina no contexto do SUS.
+          </p>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold mb-4 text-primary-300">Recursos</h3>
+          <ul class="space-y-2 text-sm text-gray-300">
+            <li class="flex items-center space-x-2">
+              <i data-lucide="file-text" class="w-4 h-4"></i>
+              <span>Protocolos Clínicos</span>
+            </li>
+            <li class="flex items-center space-x-2">
+              <i data-lucide="book-open" class="w-4 h-4"></i>
+              <span>Legislação Educacional</span>
+            </li>
+            <li class="flex items-center space-x-2">
+              <i data-lucide="shield-check" class="w-4 h-4"></i>
+              <span>Políticas de Saúde</span>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold mb-4 text-primary-300">Contato Institucional</h3>
+          <p class="text-sm text-gray-300 leading-relaxed">
+            Este material foi desenvolvido para fins educacionais e não comercial. Para dúvidas acadêmicas, consulte o professor Rodrigo Niskier.
+          </p>
+        </div>
+      </div>
+      
+      <div class="border-t border-primary-800 dark:border-gray-800 pt-6 text-center">
+        <p class="text-sm text-gray-400">
+          © 2026 - Material Educativo | Prof. Rodrigo Niskier - Todos os direitos reservados para fins acadêmicos
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Initialize AOS animations
+    AOS.init({
+      duration: 800,
+      once: true,
+      offset: 100
+    });
+
+    // Progress bar functionality
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById("progressBar").style.width = scrolled + "%";
+    });
+
+    // Initialize Preline components after DOM loads
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(() => {
+        // Initialize citation system
+        initCitationSystem();
+        
+        // Re-initialize icons after citation buttons are added
+        lucide.createIcons();
+      }, 100);
+    });
+  </script>
+</body>
+</html>
+
